@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/register-inline.css"> <!-- Added link to register-inline.css -->
 </head>
 <body>
     <div class="container">
         <h2>Register</h2>
         <% if (typeof errorMessage !== 'undefined') { %>
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" role="alert" style="color: red;"> <!-- Example of inline styling -->
                 <%= errorMessage %>
             </div>
         <% } %>
