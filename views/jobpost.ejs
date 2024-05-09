@@ -3,45 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <title>Apply for Job</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="url"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        select {
+            /* Additional styling for the dropdown */
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            padding-right: 30px; /* Adjust based on the width of the arrow icon */
+            background-image: url('path_to_arrow_icon'); /* Add an arrow icon */
+            background-position: right center;
+            background-repeat: no-repeat;
+        }
+        /* Style the dropdown arrow */
+        select::-ms-expand {
+            display: none;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            text-align: center;
+        }
+        a {
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-    <form id="applyJobForm" method="POST" action="/jobpost" >
-        
-        <label for="companyName">Company Name:</label>
-        <input type="text" id="companyName" name="companyName" required placeholder="e.g., Acme Corp" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
+    <div class="container">
+        <h2>Enter the Job Details</h2>
 
-        <label for="role">Role:</label>
-        <input type="text" id="role" name="role" required placeholder="e.g., Frontend Developer" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
+        <form id="applyJobForm" method="POST" action="/jobpost">
+            <div class="form-group">
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" name="companyName" required placeholder="e.g., Acme Corp">
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <input type="text" id="role" name="role" required placeholder="e.g., Frontend Developer">
+            </div>
+            <div class="form-group">
+                <label for="domain">Domain:</label>
+                <input type="text" id="domain" name="domain" required placeholder="e.g., IT, Healthcare">
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required placeholder="e.g., New York, Remote">
+            </div>
+            <div class="form-group">
+                <label for="skillsRequired">Skills Required:</label>
+                <input type="text" id="skillsRequired" name="skillsRequired" required placeholder="e.g., JavaScript, Python">
+            </div>
+            <div class="form-group">
+                <label for="natureOfWork">Nature of Work:</label>
+                <select id="natureOfWork" name="natureOfWork" required>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Remote">Remote</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="jobPostingLink">Job Posting Link:</label>
+                <input type="url" id="jobPostingLink" name="jobPostingLink" required placeholder="e.g., https://example.com/job-posting">
+            </div>
 
-        <label for="domain">Domain:</label>
-        <input type="text" id="domain" name="domain" required placeholder="e.g., IT, Healthcare" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
+            <input type="hidden" id="jobId" name="jobId">
 
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required placeholder="e.g., New York, Remote" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
+            <button type="submit">Apply</button>
+        </form>
 
-        <label for="skillsRequired">Skills Required:</label>
-        <input type="text" id="skillsRequired" name="skillsRequired" required placeholder="e.g., JavaScript, Python" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
-
-        <label for="natureOfWork">Nature of Work:</label>
-        <select id="natureOfWork" name="natureOfWork" required style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
-            <option value="Hybrid">Hybrid</option>
-            <option value="Remote">Remote</option>
-        </select>
-
-        <label for="jobPostingLink">Job Posting Link:</label>
-        <input type="url" id="jobPostingLink" name="jobPostingLink" required placeholder="e.g., https://example.com/job-posting" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
-
-        <input type="hidden" id="jobId" name="jobId">
-
-        <button type="submit">Apply</button>
-    </form>
-
-    <script src="/js/interactivity.js"></script>
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const jobId = params.get('jobId');
-        document.getElementById('jobId').value = jobId;
-    </script>
+        <p>Already have an account? <a href="/login">Login here</a>.</p>
+    </div>
 </body>
-</html>
