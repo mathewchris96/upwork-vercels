@@ -114,6 +114,13 @@
             <button type="submit">Apply</button>
         </form>
 
-        <p>Already have an account? <a href="/login">Login here</a>.</p>
+        <script src="/js/interactivity.js"></script> <!-- Adjust the path as necessary -->
+    <script>
+        // Extract the job ID from the URL's query parameters and set the value of the hidden 'jobId' input field
+        const params = new URLSearchParams(window.location.search);
+        const jobId = params.get('jobId');
+        document.getElementById('jobId').value = jobId;
+    </script>
+</body>
     </div>
 </body>
