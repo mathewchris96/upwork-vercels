@@ -1,31 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/interactivity.js" defer></script>
-</head>
-<body>
-    <div class="container" style="background-color: #f2f2f2; padding: 20px; border-radius: 5px;">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-        <h2 style="color: #333; text-align: center;">Login</h2>
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .error-message {
+            background-color: #ffe6e6;
+            color: #cc0000;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #4caf50;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+    
+        <h2>Login</h2>
         <% if (typeof errorMessage !== 'undefined') { %>
             <div class="error-message">
                 <%= errorMessage %>
             </div>
         <% } %>
-        <form action="/login" method="POST" id="loginForm" style="margin-top: 20px;">
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="username" style="font-weight: bold;">Username:</label>
-                <input type="text" id="username" name="username" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <form action="/login" method="POST" id="loginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
             </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="password" style="font-weight: bold;">Password:</label>
-                <input type="password" id="password" name="password" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" style="width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">Login</button>
+            <button type="submit">Login</button>
         </form>
         <p>Don't have an account? <a href="/register">Register here</a></p>
     </div>
@@ -38,4 +115,3 @@
         });
     </script>
 </body>
-</html>
