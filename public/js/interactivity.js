@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Add an event listener for the "Hire with UpWork" link
     document.querySelector('a[href="#HireWithUpWork"]').addEventListener("click", function(e) {
         e.preventDefault();
-        window.location.href = "/jobposting";
+        window.location.href = "/jobpost";
     });
 });
 
