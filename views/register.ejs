@@ -75,7 +75,49 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required class="form-control">
             </div>
-            <!-- Rest of the form remains unchanged -->
+            <div class="form-group">
+                <label for="domainOfInterest">Domain of Interest:</label>
+                <select id="domainOfInterest" name="domainOfInterest" required class="form-control">
+                    <option value="">Select a Domain</option>
+                    <option value="technology">Technology</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="design">Design</option>
+                    <option value="business">Business</option>
+                    <option value="data-science">Data Science</option>
+                    <option value="machine-learning">Machine Learning</option>
+                    <option value="sales">Sales</option>
+                    <option value="business-development">Business Development</option>
+                    <option value="finance">Finance</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="education">Education</option>
+                    <option value="engineeringS">Engineering(Software)</option>
+                    <option value="engineeringH">Engineering(Hardware)</option>
+                    <option value="research">Research</option>
+                    <option value="supplychain">Supply Chain</option>
+                    <option value="hospitality">Hospitality</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="linkedinUrl">LinkedIn URL:</label>
+                <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/yourprofile" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="currentCompany">Current Company:</label>
+                <input type="text" id="currentCompany" name="currentCompany" placeholder="Your Current Company" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="currentLevel">Current Level:</label>
+                <select id="currentLevel" name="currentLevel" required class="form-control">
+                    <option value="">Select Your Current Level</option>
+                    <option value="internship">Looking for internship</option>
+                    <option value="junior">Junior</option>
+                    <option value="mid">Mid level</option>
+                    <option value="senior">Senior</option>
+                    <option value="lead">Lead</option>
+                    <option value="manager">Manager</option>
+                    <option value="director">Director</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
         <p>Already have an account? <a href="/login">Login here</a>.</p>
