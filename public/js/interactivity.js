@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
         applyJob(body);
     });
 
-    // Add an event listener for the "Hire with UpWork" link
     document.querySelector('a[href="#HireWithUpWork"]').addEventListener("click", function(e) {
         e.preventDefault();
         window.location.href = "/jobpost";
@@ -73,10 +72,8 @@ function handleLogin(username, password) {
     .then(response => response.json())
     .then(data => {
       if (data.message === 'Login successful') {
-        // Redirect user to their profile page
         window.location.href = '/profile';
       } else {
-        // Display other messages
         alert(data.message);
       }
     })
