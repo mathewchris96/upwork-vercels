@@ -3,45 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Apply for Job</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Adjust the path as necessary -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <form id="applyJobForm" method="POST" action="/jobpost" >
         
         <label for="companyName">Company Name:</label>
-        <input type="text" id="companyName" name="companyName" required placeholder="e.g., Acme Corp">
+        <input type="text" id="companyName" name="companyName" required placeholder="e.g., Acme Corp" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
 
         <label for="role">Role:</label>
-        <input type="text" id="role" name="role" required placeholder="e.g., Frontend Developer">
+        <input type="text" id="role" name="role" required placeholder="e.g., Frontend Developer" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
 
         <label for="domain">Domain:</label>
-        <input type="text" id="domain" name="domain" required placeholder="e.g., IT, Healthcare">
+        <input type="text" id="domain" name="domain" required placeholder="e.g., IT, Healthcare" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
 
         <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required placeholder="e.g., New York, Remote">
+        <input type="text" id="location" name="location" required placeholder="e.g., New York, Remote" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
 
         <label for="skillsRequired">Skills Required:</label>
-        <input type="text" id="skillsRequired" name="skillsRequired" required placeholder="e.g., JavaScript, Python">
+        <input type="text" id="skillsRequired" name="skillsRequired" required placeholder="e.g., JavaScript, Python" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
 
         <label for="natureOfWork">Nature of Work:</label>
-        <select id="natureOfWork" name="natureOfWork" required>
+        <select id="natureOfWork" name="natureOfWork" required style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
             <option value="Hybrid">Hybrid</option>
             <option value="Remote">Remote</option>
         </select>
 
         <label for="jobPostingLink">Job Posting Link:</label>
-        <input type="url" id="jobPostingLink" name="jobPostingLink" required placeholder="e.g., https://example.com/job-posting">
+        <input type="url" id="jobPostingLink" name="jobPostingLink" required placeholder="e.g., https://example.com/job-posting" style="background-color: #f0f0f0; border: 1px solid #d3d3d3;">
 
         <input type="hidden" id="jobId" name="jobId">
 
         <button type="submit">Apply</button>
     </form>
 
-    <script src="/js/interactivity.js"></script> <!-- Adjust the path as necessary -->
+    <script src="/js/interactivity.js"></script>
     <script>
-        // Extract the job ID from the URL's query parameters and set the value of the hidden 'jobId' input field
         const params = new URLSearchParams(window.location.search);
         const jobId = params.get('jobId');
         document.getElementById('jobId').value = jobId;
     </script>
 </body>
+</html>

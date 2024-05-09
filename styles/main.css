@@ -73,9 +73,9 @@ button:hover {
 .job-card {
     background: #ffffff;
     padding: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 36px; /* Increased margin */
     border-radius: 10px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    box-shadow: none; /* Removed shadow */
 }
 
 .job-card h2 {
@@ -110,9 +110,10 @@ button:focus {
 
 footer {
     background-color: #000;
-    color: #000; /* Modified color to black from #fff */
+    color: #fff; /* Corrected color back to white */
     padding: 20px;
     text-align: center;
     text-shadow: none;
     z-index: 1000;
     position: relative;
+}
