@@ -80,10 +80,14 @@ button:hover {
 
 .job-card h2 {
     margin-bottom: 12px;
+    color: #333;
+    font-size: 20px;
 }
 
 .job-card p {
     margin-bottom: 6px;
+    color: #666;
+    line-height: 1.4;
 }
 
 .login-container,
@@ -102,6 +106,22 @@ button:focus {
     outline: 3px solid #007bff;
 }
 
+.apply-button {
+    display: inline-block;
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    margin-top: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.apply-button:hover {
+    background: #0056b9;
+}
+
 @media (max-width: 768px) {
     .container {
         width: 95%;
@@ -110,9 +130,10 @@ button:focus {
 
 footer {
     background-color: #000;
-    color: #000; /* Modified color to black from #fff */
+    color: #fff;
     padding: 20px;
     text-align: center;
     text-shadow: none;
     z-index: 1000;
     position: relative;
+}
