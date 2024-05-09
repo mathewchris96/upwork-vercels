@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Up Work - Job Portal</title>
     <style>
-        body {
+         body {
             font-family: Arial, sans-serif;
             color: #000;
             background-color: #fff;
@@ -104,7 +104,7 @@
             <img src="images/trueup.png" style="height:50px; width:150px;" alt="True Up Logo" class="logo">
         </div>
         <nav class="header-nav">
-            <a href="job-listing.html" class="nav-link">JOBS</a>
+            <a href="/jobs" class="nav-link">JOBS</a>
             <a href="trending.html" class="nav-link">TRENDING</a>
             <div class="dropdown">
                 <a href="#" class="nav-link">MORE &#9660;</a>
@@ -115,7 +115,7 @@
                 </div>
             </div>
             <a href="/login" class="nav-link login-btn">Log in</a>
-            <a href="signup.html" class="nav-link signup-btn">Sign Up</a>
+            <a href="/register" class="nav-link signup-btn">Sign Up</a>
         </nav>
     </header>
     <main>
@@ -123,16 +123,12 @@
         <div class="main-content">
             <h1 style="font-size: 3em; font-weight: bold;">Don't miss your dream tech job</h1>
             <p>We use AI to scan top tech jobs in real-time. Get the inside track on the best ones for you.</p>
-            <button id="joinNowBtn" class="main-btn" onclick="window.location.href='/login'">JOIN NOW</button>
-            <a href="job-listing.html" class="secondary-link">Search jobs</a>
+            <button id="joinNowBtn" class="main-btn" onclick="window.location.href='/register'">JOIN NOW</button>
+            <a href="/jobs" class="secondary-link">Search jobs</a>
         </div>
     </main>
     <footer style="text-align: center; padding: 20px; background-color: #f1f1f1;">
         The CareerOS for people in tech.
     </footer>
     <script src="js/interactivity.js" defer></script>
-    <script>
-        // The hover effect for the Login button will be handled in main.css
-    </script>
 </body>
-</html>

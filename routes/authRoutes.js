@@ -3,14 +3,13 @@ const router = express.Router();
 const User = require('../models/User');
 const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
 
-// Helper function for server-side validation of registration and login inputs
 const validateUserInput = (username, password, email = '') => {
   const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if (!username || !password) return false;
   if (email && !isValidEmail(email)) return false;
   return true;
 };
-// Add a GET route for '/login' that renders the 'login.ejs' view
+
 router.get('/index', (req, res) => {
   res.render('index');
 });
@@ -18,11 +17,10 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-// // Add a GET route for '/register' that renders the 'register.ejs' view
 router.get('/register', (req, res) => {
   res.render('register');
 });
-// Registration route
+
 router.post('/register', async (req, res) => {
   const { username, password, email, domainOfInterest, linkedinUrl, currentCompany, currentLevel } = req.body;
   if (!validateUserInput(username, password, email)) {
@@ -42,7 +40,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login route
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   if (!validateUserInput(username, password)) {
@@ -71,16 +68,16 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Logout route
 router.get('/logout', requireAuth, (req, res) => {
   req.session.destroy(err => {
     if (err) {
       return res.status(500).json({ message: 'Error logging out', error: err });
     }
-    res.clearCookie('connect.sid'); // Assuming 'connect.sid' is the session cookie name
+    res.clearCookie('connect.sid');
     res.status(200).json({ message: 'User logged out successfully' });
   });
 });
+
 router.get('/profile', requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId);
@@ -98,4 +95,5 @@ router.get('/profile', requireAuth, async (req, res) => {
     res.status(500).render('error', { message: 'Error retrieving user data', error: error.message });
   }
 });
+
 module.exports = router;
