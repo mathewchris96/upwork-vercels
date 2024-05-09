@@ -9,7 +9,7 @@ router.get('/jobpost', (req, res) => {
 });
 
 // Route to handle job application submissions
-router.post('/apply', async (req, res) => {
+router.post('/apply', requireAuth, async (req, res) => {
   try {
     const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
     const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink });

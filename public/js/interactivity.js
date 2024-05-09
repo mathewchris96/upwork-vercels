@@ -23,14 +23,18 @@ document.addEventListener("DOMContentLoaded", function() {
         const body = JSON.stringify({ companyName, role, domain, location, skillsRequired, natureOfWork });
         applyJob(body);
     });
+
+    // Add an event listener for the "Hire with UpWork" link
+    document.querySelector('a[href="#HireWithUpWork"]').addEventListener("click", function(e) {
+        e.preventDefault();
+        window.location.href = "/jobpost";
+    });
 });
 
-    const express = require('express');
+const express = require('express');
 const router = express.Router();
 const Job = require('../models/Job');
 const { requireAuth } = require('./middleware/authMiddleware');
-
-
 
 function applyJob(body) {
     fetch('/jobpost', {
@@ -81,7 +85,6 @@ function handleLogin(username, password) {
       alert('An unexpected error occurred. Please try again later.');
     });
   }
-  
 
 function updateProfile(profileData) {
     fetch('/api/user/profile', {
@@ -123,10 +126,7 @@ function submitJobPosting(jobData) {
     });
 }
 
-
 function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
-
-
