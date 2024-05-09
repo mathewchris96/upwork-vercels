@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply for Job</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Adjust the path as necessary -->
+</head>
+<body>
+    <form id="applyJobForm" method="POST" action="/jobpost" >
+        
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName" required placeholder="e.g., Acme Corp">
+
+        <label for="role">Role:</label>
+        <input type="text" id="role" name="role" required placeholder="e.g., Frontend Developer">
+
+        <label for="domain">Domain:</label>
+        <input type="text" id="domain" name="domain" required placeholder="e.g., IT, Healthcare">
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required placeholder="e.g., New York, Remote">
+
+        <label for="skillsRequired">Skills Required:</label>
+        <input type="text" id="skillsRequired" name="skillsRequired" required placeholder="e.g., JavaScript, Python">
+
+        <label for="natureOfWork">Nature of Work:</label>
+        <select id="natureOfWork" name="natureOfWork" required>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Remote">Remote</option>
+        </select>
+
+        <label for="jobPostingLink">Job Posting Link:</label>
+        <input type="url" id="jobPostingLink" name="jobPostingLink" required placeholder="e.g., https://example.com/job-posting">
+
+        <input type="hidden" id="jobId" name="jobId">
+
+        <button type="submit">Apply</button>
+    </form>
+
+    <script src="/js/interactivity.js"></script> <!-- Adjust the path as necessary -->
+    <script>
+        // Extract the job ID from the URL's query parameters and set the value of the hidden 'jobId' input field
+        const params = new URLSearchParams(window.location.search);
+        const jobId = params.get('jobId');
+        document.getElementById('jobId').value = jobId;
+    </script>
+</body>

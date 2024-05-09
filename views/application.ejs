@@ -1,0 +1,44 @@
+<!-- application.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Form</title>
+  <script src="/js/interactivity.js"></script>
+</head>
+<body>
+  <form id="applicationForm" action="/application/submit" method="POST">
+    <label for="jobId">Job ID:</label>
+    <input type="text" id="jobId" name="jobId"><br>
+
+    <label for="applicantName">Applicant Name:</label>
+    <input type="text" id="applicantName" name="applicantName"><br>
+
+    <label for="applicantEmail">Applicant Email:</label>
+    <input type="email" id="applicantEmail" name="applicantEmail"><br>
+
+    <label for="qualifications">Qualifications:</label>
+    <textarea id="qualifications" name="qualifications"></textarea><br>
+
+    <label for="experience">Experience:</label>
+    <textarea id="experience" name="experience"></textarea><br>
+
+    <label for="current_field">Current Field:</label>
+    <input type="text" id="current_field" name="current_field"><br>
+
+    <label for="year_of_experience">Years of Experience:</label>
+    <input type="number" id="year_of_experience" name="year_of_experience"><br>
+
+    <label for="role_at_current_company">Role at Current Company:</label>
+    <input type="text" id="role_at_current_company" name="role_at_current_company"><br>
+
+    <label for="skills">Skills:</label>
+    <input type="text" id="skills" name="skills"><br>
+
+    <label for="current_location">Current Location:</label>
+    <input type="text" id="current_location" name="current_location"><br>
+
+    <button type="submit">Submit Application</button>
+  </form>

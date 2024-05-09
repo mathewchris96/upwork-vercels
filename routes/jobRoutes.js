@@ -1,0 +1,35 @@
+const express = require('express');
+const router = express.Router();
+const Job = require('../models/Job');
+const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
+
+// Route to display the job application form
+router.get('/jobpost', (req, res) => {
+  res.render('apply.ejs');
+});
+
+// Route to handle job application submissions
+router.post('/apply', async (req, res) => {
+  try {
+    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
+    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink });
+    await job.save();
+    res.status(201).json({ message: 'Posted job successfully', job });
+  } catch (error) {
+    console.error(`Failed to post job: ${error}`);
+    res.status(500).json({ message: 'Failed to post job', error: error.message });
+  }
+});
+
+// New route to handle GET requests for '/jobs'
+router.get('/jobs', async (req, res) => {
+  try {
+    const jobs = await Job.find({});
+    res.render('jobListing.ejs', { jobs });
+  } catch (error) {
+    console.error(`Failed to fetch jobs: ${error}`);
+    res.status(500).json({ message: 'Failed to fetch jobs', error: error.message });
+  }
+});
+
+module.exports = router;

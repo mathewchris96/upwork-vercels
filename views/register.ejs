@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <div class="alert alert-danger" role="alert">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+        <form action="/register" method="POST">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="domainOfInterest">Domain of Interest:</label>
+                <select id="domainOfInterest" name="domainOfInterest" required class="form-control">
+                    <option value="">Select a Domain</option>
+                    <option value="technology">Technology</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="design">Design</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="linkedinUrl">LinkedIn URL:</label>
+                <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/yourprofile" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="currentCompany">Current Company:</label>
+                <input type="text" id="currentCompany" name="currentCompany" placeholder="Your Current Company" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="currentLevel">Current Level:</label>
+                <select id="currentLevel" name="currentLevel" required class="form-control">
+                    <option value="">Select Your Current Level</option>
+                    <option value="internship">Looking for internship</option>
+                    <option value="junior">Junior</option>
+                    <option value="mid">Mid level</option>
+                    <option value="senior">Senior</option>
+                    <option value="lead">Lead</option>
+                    <option value="manager">Manager</option>
+                    <option value="director">Director</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <p>Already have an account? <a href="/login">Login here</a>.</p>
+    </div>
+    <script src="js/interactivity.js"></script>
+</body>
+</html>

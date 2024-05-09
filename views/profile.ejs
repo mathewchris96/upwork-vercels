@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/jobs">Jobs</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="user-details">
+            <h2>User Profile</h2>
+            <p><strong>Username:</strong> <%= user.username ? user.username : 'Not provided' %></p>
+            <p><strong>Email:</strong> <%= user.email ? user.email : 'Not provided' %></p>
+            <p><strong>Domain of Interest:</strong> <%= user.domainOfInterest ? user.domainOfInterest : 'Not specified' %></p>
+        </section>
+        <section id="applied-jobs">
+            <h2>Applied Jobs</h2>
+            <% if(user.jobsAppliedFor && user.jobsAppliedFor.length > 0) { %>
+                <ul>
+                    <% user.jobsAppliedFor.forEach(function(job) { %>
+                        <li>
+                            <h3><%= job.title %></h3>
+                            <p><strong>Company:</strong> <%= job.company %></p>
+                            <p><strong>Location:</strong> <%= job.location %></p>
+                            <p><strong>Skills Required:</strong> <%= job.skills.join(', ') %></p>
+                            <button onclick="viewJobDetails('<%= job._id %>')">View</button>
+                            <button onclick="withdrawApplication('<%= job._id %>')">Withdraw Application</button>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>You have not applied for any jobs yet.</p>
+            <% } %>
+        </section>
+    </main>
+    <script>
+        function withdrawApplication(jobId) {
+            fetch('/jobs/withdraw/' + jobId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ jobId: jobId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to withdraw application. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        }
+
+        function viewJobDetails(jobId) {
+            alert('Viewing details for job ID: ' + jobId);
+        }
+    </script>
+    <script src="/js/interactivity.js"></script>
+</body>
+</html>

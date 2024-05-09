@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending Page</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  .card {
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mt-5 text-center">Trending</h1>
+
+  <div class="row mt-4">
+    <!-- Remote Tech Jobs -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Remote Tech Jobs</h5>
+          <p class="card-text">Open Jobs: 32,891</p>
+          <p class="card-text">Companies: 250</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#remoteTechJobsModal">More Info</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI/ML -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">AI/ML</h5>
+          <p class="card-text">Open Jobs: 12,021</p>
+          <p class="card-text">Companies: 150</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#aiMlModal">More Info</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <!-- FAANG+ -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">FAANG+</h5>
+          <p class="card-text">Open Jobs: 11,034</p>
+          <p class="card-text">Companies: 5</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#faangModal">More Info</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fintech -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Fintech</h5>
+          <p class="card-text">Open Jobs: 10,592</p>
+          <p class="card-text">Companies: 80</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#fintechModal">More Info</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <!-- CyberSecurity -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">CyberSecurity</h5>
+          <p class="card-text">Open Jobs: 8,760</p>
+          <p class="card-text">Companies: 120</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#cyberSecurityModal">More Info</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network Management -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Network Management</h5>
+          <p class="card-text">Open Jobs: 6,320</p>
+          <p class="card-text">Companies: 90</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#networkManagementModal">More Info</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <!-- Crypto -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Crypto</h5>
+          <p class="card-text">Open Jobs: 4,500</p>
+          <p class="card-text">Companies: 200</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#cryptoModal">More Info</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- React -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">React</h5>
+          <p class="card-text">Open Jobs: 15,200</p>
+          <p class="card-text">Companies: 110</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#reactModal">More Info</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modals -->
+<!-- Remote Tech Jobs Modal -->
+<div class="modal fade" id="remoteTechJobsModal" tabindex="-1" role="dialog" aria-labelledby="remoteTechJobsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="remoteTechJobsModalLabel">Remote Tech Jobs</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Open Jobs: 32,891</p>
+        <p>Companies: 250</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI/ML Modal -->
+<div class="modal fade" id="aiMlModal" tabindex="-1" role="dialog" aria-labelledby="aiMlModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aiMlModalLabel">AI/ML</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Open Jobs: 12,021</p>
+        <p>Companies: 150</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAANG+ Modal -->
+<div class="modal fade" id="faangModal" tabindex="-1" role="dialog" aria-labelledby="faangModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="faangModalLabel">FAANG+</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Open Jobs: 11,034</p>
+        <p>Companies: 5</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fintech Modal -->
+<div class="modal fade" id="fintechModal" tabindex="-1" role="dialog" aria-labelledby="fintechModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fintechModalLabel">Fintech</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Open Jobs: 10,592</p>
+        <p>Companies: 80</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CyberSecurity Modal -->
+<div class="modal fade" id="cyberSecurityModal" tabindex="-1" role="dialog" aria-labelledby="cyberSecurityModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cyberSecurityModalLabel">CyberSecurity</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Open Jobs: 8,760</p>
+        <p>Companies: 120</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Network Management Modal -->
+<div class="modal fade" id="networkManagementModal" tabindex="-1" role="dialog" aria-labelledby="networkManagementModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="networkManagementModalLabel">Network Management</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Open Jobs: 6,320</p>
+        <p>Companies: 90</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Crypto Modal -->
+<div class="modal fade" id="cryptoModal" tabindex="-1" role="dialog" aria-labelledby="cryptoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cryptoModalLabel">Crypto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Open Jobs: 4,500</p>
+        <p>Companies: 200</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- React Modal -->
+<div class="modal fade" id="reactModal" tabindex="-1" role="dialog" aria-labelledby="reactModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reactModalLabel">React</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Open Jobs: 15,200</p>
+        <p>Companies: 110</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
