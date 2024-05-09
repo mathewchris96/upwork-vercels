@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Apply for Job</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Adjust the path as necessary -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <form id="applyJobForm" method="POST" action="/jobpost" >
@@ -37,11 +37,11 @@
         <button type="submit">Apply</button>
     </form>
 
-    <script src="/js/interactivity.js"></script> <!-- Adjust the path as necessary -->
+    <script src="/js/interactivity.js"></script>
     <script>
-        // Extract the job ID from the URL's query parameters and set the value of the hidden 'jobId' input field
         const params = new URLSearchParams(window.location.search);
         const jobId = params.get('jobId');
         document.getElementById('jobId').value = jobId;
     </script>
 </body>
+</html>
