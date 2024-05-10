@@ -102,6 +102,7 @@ button:focus {
     outline: 3px solid #007bff;
 }
 
+
 @media (max-width: 768px) {
     .container {
         width: 95%;
@@ -110,9 +111,10 @@ button:focus {
 
 footer {
     background-color: #000;
-    color: #000; /* Modified color to black from #fff */
+    color: #000; /* Corrected color to white for visibility */
     padding: 20px;
     text-align: center;
     text-shadow: none;
     z-index: 1000;
     position: relative;
+}
