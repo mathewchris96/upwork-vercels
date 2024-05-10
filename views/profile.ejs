@@ -5,20 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+        }
+        main {
+            padding: 20px;
+        }
+        #user-details {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+        #user-details p {
+            margin: 0 0 10px 0;
+        }
+        #user-details strong {
+            font-weight: bold;
+        }
+        #applied-jobs {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        #applied-jobs h2 {
+            margin-top: 0;
+        }
+        #applied-jobs ul {
+            padding: 0;
+            list-style: none;
+        }
+        #applied-jobs li {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/jobs">Jobs</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/" style="color: #fff;">Home</a></li>
+                <li><a href="/jobs" style="color: #fff;">Jobs</a></li>
+                <li><a href="/logout" style="color: #fff;">Logout</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <section id="user-details">
-            <h2>User Profile</h2>
+            <h2 style="color: #333; text-align: center;">User Profile</h2>
             <p><strong>Username:</strong> <%= user.username ? user.username : 'Not provided' %></p>
             <p><strong>Email:</strong> <%= user.email ? user.email : 'Not provided' %></p>
             <p><strong>Domain of Interest:</strong> <%= user.domainOfInterest ? user.domainOfInterest : 'Not specified' %></p>
@@ -26,18 +94,18 @@
             <p><strong>Current Company:</strong> <%= user.currentCompany ? user.currentCompany : 'Not specified' %></p>
             <p><strong>Current Level:</strong> <%= user.currentLevel ? user.currentLevel : 'Not specified' %></p>
         </section>
-        <section id="applied-jobs">
-            <h2>Applied Jobs</h2>
+        <section id="applied-jobs" style="text-align: center;">
+            <h2 style="color: #333;">Applied Jobs</h2>
             <% if(user.jobsAppliedFor && user.jobsAppliedFor.length > 0) { %>
                 <ul>
                     <% user.jobsAppliedFor.forEach(function(job) { %>
                         <li>
-                            <h3><%= job.title %></h3>
+                            <h3 style="margin-bottom: 10px;"><%= job.title %></h3>
                             <p><strong>Company:</strong> <%= job.company %></p>
                             <p><strong>Location:</strong> <%= job.location %></p>
                             <p><strong>Skills Required:</strong> <%= job.skills.join(', ') %></p>
-                            <button onclick="viewJobDetails('<%= job._id %>')">View</button>
-                            <button onclick="withdrawApplication('<%= job._id %>')">Withdraw Application</button>
+                            <button onclick="viewJobDetails('<%= job._id %>')" style="background-color: #333; color: #fff;">View</button>
+                            <button onclick="withdrawApplication('<%= job._id %>')" style="background-color: #333; color: #fff;">Withdraw Application</button>
                         </li>
                     <% }); %>
                 </ul>
