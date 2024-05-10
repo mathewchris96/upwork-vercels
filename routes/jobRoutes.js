@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Job = require('../models/Job');
-const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
+const { requireAuth, alreadyLoggedIn} = require('./middleware/authMiddleware');
 
 router.get('/jobpost', (req, res) => {
   res.render('jobpost.ejs');
