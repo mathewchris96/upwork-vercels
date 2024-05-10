@@ -1,5 +1,0 @@
-As a meticulous engineer, I will carefully review the existing codebase and ensure that all redirection logic after job posting or application is handled directly within the existing routes and JavaScript functions. I will not create a separate redirect.js file as it is not necessary based on the analysis provided.
-
-I will follow the current repository's language, frameworks, and dependencies to ensure that the code I write seamlessly integrates with the existing codebase. I will pay close attention to detail and ensure that my code is syntactically perfect and complete, with fully implemented functions and classes.
-
-I will strictly adhere to the code planning steps for code modification and make sure that my code works on the first try without any mistakes. My utmost care for the code will guarantee that it meets the highest standards of quality and functionality.
