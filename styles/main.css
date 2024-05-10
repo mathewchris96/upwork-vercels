@@ -102,16 +102,6 @@ button:focus {
     outline: 3px solid #007bff;
 }
 
-.navbar-item {
-    color: #333; /* Matches the body text color for consistency */
-    padding: 10px 15px; /* Hypothetical padding for navbar items */
-    text-decoration: none; /* Removes underline from links */
-    font-size: 16px; /* Hypothetical font size for navbar items */
-}
-
-.navbar-item:hover {
-    background-color: #f0f2f5; /* Light background on hover for visual feedback */
-}
 
 @media (max-width: 768px) {
     .container {
@@ -121,7 +111,7 @@ button:focus {
 
 footer {
     background-color: #000;
-    color: #fff; /* Corrected color to white for visibility */
+    color: #000; /* Corrected color to white for visibility */
     padding: 20px;
     text-align: center;
     text-shadow: none;
