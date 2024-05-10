@@ -3,12 +3,10 @@ const router = express.Router();
 const Job = require('../models/Job');
 const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
 
-// Route to display the job application form
 router.get('/jobpost', (req, res) => {
-  res.render('apply.ejs');
+  res.render('jobpost.ejs');
 });
 
-// Route to handle job application submissions
 router.post('/apply', requireAuth, async (req, res) => {
   try {
     const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
@@ -21,7 +19,6 @@ router.post('/apply', requireAuth, async (req, res) => {
   }
 });
 
-// New route to handle GET requests for '/jobs'
 router.get('/jobs', async (req, res) => {
   try {
     const jobs = await Job.find({});
@@ -33,3 +30,4 @@ router.get('/jobs', async (req, res) => {
 });
 
 module.exports = router;
+```
