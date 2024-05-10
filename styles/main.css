@@ -102,19 +102,36 @@ button:focus {
     outline: 3px solid #007bff;
 }
 
-
 @media (max-width: 768px) {
     .container {
         width: 95%;
+    }
+    header h1 {
+        font-size: 20px;
+    }
+    .job-card h2 {
+        font-size: 18px;
+    }
+    .job-card p, .form-group label, .input-field, textarea {
+        font-size: 14px;
     }
 }
 
 footer {
     background-color: #000;
-    color: #000; /* Corrected color to white for visibility */
+    color: #fff;
     padding: 20px;
     text-align: center;
     text-shadow: none;
     z-index: 1000;
     position: relative;
+}
+
+/* Updated global style with increased specificity */
+div.job-card {
+    background: #ffffff;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
