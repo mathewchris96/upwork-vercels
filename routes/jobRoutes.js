@@ -3,24 +3,14 @@ const router = express.Router();
 const Job = require('../models/Job');
 const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
 
-router.get('/', async (req, res) => {
-  try {
-    const jobs = await Job.find({});
-    res.render('index.ejs', { jobs });
-  } catch (error) {
-    console.error(`Failed to fetch jobs for index: ${error}`);
-    res.status(500).json({ message: 'Failed to fetch jobs for index', error: error.message });
-  }
-});
-
 router.get('/jobpost', (req, res) => {
   res.render('jobpost.ejs');
 });
 
 router.post('/jobpost', requireAuth, async (req, res) => {
   try {
-    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
-    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink });
+    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, salary } = req.body; // Added 'salary' as a field
+    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, salary }); // Included 'salary' field in the new Job object
     await job.save();
     res.status(201).json({ message: 'Posted job successfully', job });
   } catch (error) {
@@ -39,5 +29,4 @@ router.get('/jobs', async (req, res) => {
   }
 });
 
-module.exports = router;
-```
+module.exports = router; 
