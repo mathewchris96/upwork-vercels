@@ -37,10 +37,17 @@
             color: #666;
             font-size: 14px;
         }
+        .job-heading {
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <h2 class="job-heading">Available Jobs</h2>
         <% if(jobs && jobs.length > 0) { %>
             <% jobs.forEach(function(job) { %>
                 <div class="job-listing">
@@ -57,4 +64,3 @@
             <p>No job listings available at the moment.</p>
         <% } %>
     </div>
-</body>
