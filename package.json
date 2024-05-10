@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A Node.js backend template for a job listing and application management system.",
   "main": "server.js",
+  "engines":{"node":18.x"},
   
   "scripts": {
     "start": "node server.js",
