@@ -24,15 +24,19 @@
             width: 150px;
             height: auto;
         }
-        .header-nav, .navbar { /* Modification: Added .navbar to existing .header-nav for unified styling */
+        .header-nav {
             display: flex;
             align-items: center;
-            justify-content: space-around; /* Added for horizontal arrangement */
         }
-        .nav-link, .navbar a { /* Modification: Targeting .navbar a alongside .nav-link */
+        .header-nav ul {
+            list-style: none;
+            display: flex;
+        }
+        .nav-link {
             margin: 0 15px;
-            text-decoration: none; /* Added to remove underline */
+            text-decoration: none;
             color: #000;
+            border-bottom: none; /* Removed the underline */
         }
         .dropdown-content {
             display: none;
@@ -86,11 +90,11 @@
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="header-nav"> <!-- Added a class here -->
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/jobs">Jobs</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a class="nav-link" href="/">Home</a></li> <!-- Arranged the elements horizontally -->
+                <li><a class="nav-link" href="/jobs">Jobs</a></li> <!-- Arranged the elements horizontally -->
+                <li><a class="nav-link" href="/logout">Logout</a></li> <!-- Arranged the elements horizontally -->
             </ul>
         </nav>
     </header>
@@ -133,4 +137,3 @@
     </script>
     <script src="/js/interactivity.js"></script>
 </body>
-</html>
