@@ -3,6 +3,16 @@ const router = express.Router();
 const Job = require('../models/Job');
 const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
 
+router.get('/', async (req, res) => {
+  try {
+    const jobs = await Job.find({});
+    res.render('index.ejs', { jobs });
+  } catch (error) {
+    console.error(`Failed to fetch jobs for index: ${error}`);
+    res.status(500).json({ message: 'Failed to fetch jobs for index', error: error.message });
+  }
+});
+
 router.get('/jobpost', (req, res) => {
   res.render('jobpost.ejs');
 });
@@ -30,3 +40,4 @@ router.get('/jobs', async (req, res) => {
 });
 
 module.exports = router;
+```

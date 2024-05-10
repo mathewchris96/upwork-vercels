@@ -10,9 +10,10 @@ const validateUserInput = (username, password, email = '') => {
   return true;
 };
 
-router.get('/index', (req, res) => {
+router.get('/', (req, res) => {
   res.render('index');
 });
+
 router.get('/login', (req, res) => {
   res.render('login');
 });
