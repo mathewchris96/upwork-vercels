@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateProfile({ name, email, bio, jobsAppliedFor });
   });
 
-  document.getElementById('applyJobForm').addEventListener('submit', function(e) {
+  document.getElementById('newApplyJobForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
     const skillsRequired = formData
@@ -39,7 +39,23 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     window.location.href = '/jobpost';
   });
+
+  document.querySelector('.jobFilterDropdown').addEventListener('change', function(e) {
+    const filterValue = e.target.value;
+    filterJobs(filterValue);
+  });
 });
+
+function filterJobs(filterValue) {
+  const allJobs = document.querySelectorAll('.jobListing');
+  allJobs.forEach(job => {
+    if (job.dataset.jobDomain === filterValue || filterValue === 'all') {
+      job.style.display = '';
+    } else {
+      job.style.display = 'none';
+    }
+  });
+}
 
 const express = require('express');
 const router = express.Router();

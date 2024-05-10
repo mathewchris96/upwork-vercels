@@ -1,3 +1,16 @@
+:root {
+    --primary-color: #007fff;
+    --primary-color-hover: #0056b9;
+    --background-color: #f0f2f5;
+    --text-color: #333;
+    --button-background-color: #007fff;
+    --button-background-color-hover: #0056b9;
+    --button-text-color: #ffffff;
+    --font-family: 'Arial', sans-serif;
+    --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    --box-shadow-strong: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,9 +18,9 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
     line-height: 1.6;
     position: relative;
 }
@@ -33,7 +46,7 @@ form {
     background: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow);
     margin-top: 20px;
 }
 
@@ -56,8 +69,8 @@ textarea {
 
 button {
     display: inline-block;
-    background: #007fff;
-    color: #ffffff;
+    background: var(--button-background-color);
+    color: var(--button-text-color);
     border: none;
     padding: 12px 24px;
     margin-top: 12px;
@@ -67,7 +80,7 @@ button {
 }
 
 button:hover {
-    background: #0056b9;
+    background: var(--button-background-color-hover);
 }
 
 .job-card {
@@ -75,7 +88,7 @@ button:hover {
     padding: 24px;
     margin-bottom: 24px;
     border-radius: 10px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow-strong);
 }
 
 .job-card h2 {
@@ -102,16 +115,30 @@ button:focus {
     outline: 3px solid #007bff;
 }
 
-
 @media (max-width: 768px) {
     .container {
         width: 95%;
+    }
+
+    .job-card {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .job-card h2 {
+        font-size: 18px;
+    }
+
+    .job-card p {
+        font-size: 14px;
     }
 }
 
 footer {
     background-color: #000;
-    color: #000; /* Corrected color to white for visibility */
+    color: #fff; /* Assuming this was intended to be corrected for visibility */
     padding: 20px;
     text-align: center;
     text-shadow: none;
