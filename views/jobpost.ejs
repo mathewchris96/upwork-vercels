@@ -1,7 +1,125 @@
-As a meticulous engineer, I will follow the plan of action to create the file and implement the necessary steps. Since the plan specifies using ejs for the file, I will ensure that the file is created in the views directory with the name jobpost.ejs. I will then proceed to add the necessary HTML structure and form elements for the job application form within the file.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply for Job</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="url"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        select {
+            /* Additional styling for the dropdown */
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            padding-right: 30px; /* Adjust based on the width of the arrow icon */
+            background-image: url('path_to_arrow_icon'); /* Add an arrow icon */
+            background-position: right center;
+            background-repeat: no-repeat;
+        }
+        /* Style the dropdown arrow */
+        select::-ms-expand {
+            display: none;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            text-align: center;
+        }
+        a {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter the Job Details</h2>
 
-Next, I will import the submitJobPosting function from the interactivity.js file using a script tag to ensure form functionality. I will also reference any necessary CSS files for styling to maintain consistency with the site's design.
+        <form id="applyJobForm" method="POST" action="/jobpost">
+            <div class="form-group">
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" name="companyName" required placeholder="e.g., Acme Corp">
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <input type="text" id="role" name="role" required placeholder="e.g., Frontend Developer">
+            </div>
+            <div class="form-group">
+                <label for="domain">Domain:</label>
+                <input type="text" id="domain" name="domain" required placeholder="e.g., IT, Healthcare">
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required placeholder="e.g., New York, Remote">
+            </div>
+            <div class="form-group">
+                <label for="skillsRequired">Skills Required:</label>
+                <input type="text" id="skillsRequired" name="skillsRequired" required placeholder="e.g., JavaScript, Python">
+            </div>
+            <div class="form-group">
+                <label for="natureOfWork">Nature of Work:</label>
+                <select id="natureOfWork" name="natureOfWork" required>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Remote">Remote</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="jobPostingLink">Job Posting Link:</label>
+                <input type="url" id="jobPostingLink" name="jobPostingLink" required placeholder="e.g., https://example.com/job-posting">
+            </div>
 
-I will ensure that the code is syntactically perfect and complete, and I will not make any mistakes in the implementation of the functions and classes. I will also take into account the current repository's language, frameworks, and dependencies to ensure that the code integrates seamlessly with the existing codebase.
+            <!-- Removed the hidden input field for jobId as it is being set via JavaScript dynamically -->
 
-Overall, I will approach the task with the utmost care and attention to detail, ensuring that the code works on the first try and meets all the requirements specified in the plan of action.
+            <button type="submit">Apply</button>
+        </form>
+
+        <script src="/js/interactivity.js"></script> <!-- Adjust the path as necessary -->
+        <script>
+            // Extract the job ID from the URL's query parameters and set the value of the hidden 'jobId' input field
+            const params = new URLSearchParams(window.location.search);
+            const jobId = params.get('jobId');
+            // document.getElementById('jobId').value = jobId; // No longer required
+        </script>
+    </div>
+</body>
