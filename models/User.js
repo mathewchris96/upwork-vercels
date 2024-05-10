@@ -37,21 +37,9 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Job',
   }],
-  fullName: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  bio: {
-    type: String,
-    trim: true,
-  },
-  profilePictureUrl: {
-    type: String,
-    trim: true,
-  },
 });
 
+// Hashing the password before saving it to the database
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   try {
@@ -63,6 +51,7 @@ userSchema.pre('save', async function(next) {
   }
 });
 
+// Method to compare the password for login
 userSchema.methods.comparePassword = async function(candidatePassword) {
   try {
     return await bcrypt.compare(candidatePassword, this.password);
@@ -70,5 +59,3 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
     throw new Error('Comparing password failed');
   }
 };
-
-module.exports = mongoose.model('User', userSchema);
