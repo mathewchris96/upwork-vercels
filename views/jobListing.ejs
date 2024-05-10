@@ -2,12 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+            text-align: center; /* Center align the content */
+        }
+        .job-listing {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .apply-button {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            background-color: #007bff; /* Modified color */
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        p {
+            color: #666;
+            font-size: 14px;
+        }
+        .job-heading {
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <h2 class="job-heading">Available Jobs</h2>
         <% if(jobs && jobs.length > 0) { %>
             <% jobs.forEach(function(job) { %>
                 <div class="job-listing">
