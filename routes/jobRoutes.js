@@ -9,8 +9,8 @@ router.get('/jobpost', (req, res) => {
 
 router.post('/jobpost', requireAuth, async (req, res) => {
   try {
-    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, salary } = req.body; // Added 'salary' as a field
-    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, salary }); // Included 'salary' field in the new Job object
+    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, contactEmail } = req.body; // Added contactEmail field
+    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, contactEmail }); // Added contactEmail to the job data
     await job.save();
     res.status(201).json({ message: 'Posted job successfully', job });
   } catch (error) {
@@ -29,4 +29,4 @@ router.get('/jobs', async (req, res) => {
   }
 });
 
-module.exports = router; 
+module.exports = router;
