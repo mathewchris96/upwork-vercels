@@ -100,3 +100,6 @@ router.get('/profile', requireAuth, async (req, res) => {
     res.status(500).render('error', { message: 'Error retrieving user data', error: error.message });
   }
 });
+
+
+module.exports = router;
