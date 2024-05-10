@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
     const user = new User({ username, password, email, domainOfInterest, linkedinUrl, currentCompany, currentLevel });
     await user.save();
     req.session.userId = user._id;
-    res.redirect('/login'); // Modified line: Redirecting user to login page after successful registration
+    res.redirect('/'); // Redirecting user to the index page after successful registration for a better user experience
   } catch (error) {
     res.status(500).json({ message: 'Error registering user', error: error.message });
   }
