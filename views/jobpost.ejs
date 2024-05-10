@@ -109,17 +109,17 @@
                 <input type="url" id="jobPostingLink" name="jobPostingLink" required placeholder="e.g., https://example.com/job-posting">
             </div>
 
-            <!-- Removed the hidden input field for jobId as it is being set via JavaScript dynamically -->
+            <input type="hidden" id="jobId" name="jobId">
 
             <button type="submit">Apply</button>
         </form>
 
         <script src="/js/interactivity.js"></script> <!-- Adjust the path as necessary -->
-        <script>
-            // Extract the job ID from the URL's query parameters and set the value of the hidden 'jobId' input field
-            const params = new URLSearchParams(window.location.search);
-            const jobId = params.get('jobId');
-            // document.getElementById('jobId').value = jobId; // No longer required
-        </script>
+    <script>
+        // Extract the job ID from the URL's query parameters and set the value of the hidden 'jobId' input field
+        const params = new URLSearchParams(window.location.search);
+        const jobId = params.get('jobId');
+        document.getElementById('jobId').value = jobId;
+    </script>
     </div>
 </body>
