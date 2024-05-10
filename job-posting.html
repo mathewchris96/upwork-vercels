@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post a Job - True Up</title>
     <link rel="stylesheet" href="styles/main.css">
-    <script src="js/interactivity.js" defer></script>
+    <script src="public/js/interactivity.js" defer></script>
 </head>
 <body>
     <header>
         <h1>Post a Job</h1>
+        <p>For more information on project setup and execution, please see the <a href="README.md">README.md</a>.</p>
     </header>
     <main>
         <form id="jobPostForm">
@@ -39,7 +40,6 @@
     <script>
         document.getElementById('jobPostForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            // Assuming a function submitJobPosting exists in interactivity.js
             submitJobPosting({
                 jobTitle: document.getElementById('jobTitle').value,
                 companyName: document.getElementById('companyName').value,
