@@ -55,9 +55,12 @@
         button:hover {
             background-color: #0056b3;
         }
-        .error-message {
+        .error-message, .success-message {
             color: #d9534f;
             margin-bottom: 10px;
+        }
+        .success-message {
+            color: #28a745;
         }
         p {
             text-align: center;
@@ -75,6 +78,11 @@
         <% if (typeof errorMessage !== 'undefined') { %>
             <div class="error-message">
                 <%= errorMessage %>
+            </div>
+        <% } %>
+        <% if (typeof successMessage !== 'undefined') { %>
+            <div class="success-message">
+                <%= successMessage %>
             </div>
         <% } %>
         <form action="/login" method="POST" id="loginForm">
@@ -99,3 +107,5 @@
         });
     </script>
 </body>
+
+</html>
