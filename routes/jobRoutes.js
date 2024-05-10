@@ -12,7 +12,7 @@ router.post('/jobpost', requireAuth, async (req, res) => {
     const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
     const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink });
     await job.save();
-    res.status(201).json({ message: 'Posted job successfully', job });
+    res.redirect('/');
   } catch (error) {
     console.error(`Failed to post job: ${error}`);
     res.status(500).json({ message: 'Failed to post job', error: error.message });
