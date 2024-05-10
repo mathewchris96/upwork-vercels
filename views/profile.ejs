@@ -24,13 +24,14 @@
             width: 150px;
             height: auto;
         }
-        .header-nav {
+        .header-nav, .navbar { /* Modification: Added .navbar to existing .header-nav for unified styling */
             display: flex;
             align-items: center;
+            justify-content: space-around; /* Added for horizontal arrangement */
         }
-        .nav-link {
+        .nav-link, .navbar a { /* Modification: Targeting .navbar a alongside .nav-link */
             margin: 0 15px;
-            text-decoration: none;
+            text-decoration: none; /* Added to remove underline */
             color: #000;
         }
         .dropdown-content {
@@ -132,3 +133,4 @@
     </script>
     <script src="/js/interactivity.js"></script>
 </body>
+</html>
