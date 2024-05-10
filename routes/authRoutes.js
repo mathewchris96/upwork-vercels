@@ -88,7 +88,10 @@ router.get('/profile', requireAuth, async (req, res) => {
       userId: user._id,
       username: user.username,
       email: user.email,
-      domainOfInterest: user.domainOfInterest
+      domainOfInterest: user.domainOfInterest,
+      linkedinUrl: user.linkedinUrl,
+      currentCompany: user.currentCompany,
+      currentLevel: user.currentLevel
     };
     res.render('profile', { user: userInfo });
   } catch (error) {

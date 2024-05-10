@@ -19,17 +19,46 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
         const formData = new FormData(this);
         const skillsRequired = formData.get('skillsRequired').split(',').map(skill => skill.trim());
-        const { companyName, role, domain, location, natureOfWork } = Object.fromEntries(formData.entries()); // Convert FormData to object
+        const { companyName, role, domain, location, natureOfWork } = Object.fromEntries(formData.entries());
         const body = JSON.stringify({ companyName, role, domain, location, skillsRequired, natureOfWork });
         applyJob(body);
     });
 
-    // Add an event listener for the "Hire with UpWork" link
     document.querySelector('a[href="#HireWithUpWork"]').addEventListener("click", function(e) {
         e.preventDefault();
         window.location.href = "/jobpost";
     });
+
+    fetchUserProfile();
 });
+
+function fetchUserProfile() {
+    fetch('/api/user/profile', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        document.getElementById("name").value = data.name || '';
+        document.getElementById("email").value = data.email || '';
+        document.getElementById("bio").value = data.bio || '';
+        data.jobsAppliedFor.forEach(jobId => {
+            let jobCheckbox = document.querySelector(`input[name="jobsApplied"][value="${jobId}"]`);
+            if (jobCheckbox) jobCheckbox.checked = true;
+        });
+    })
+    .catch((error) => {
+        console.error('Error fetching profile:', error);
+    });
+}
 
 const express = require('express');
 const router = express.Router();
@@ -73,10 +102,8 @@ function handleLogin(username, password) {
     .then(response => response.json())
     .then(data => {
       if (data.message === 'Login successful') {
-        // Redirect user to their profile page
         window.location.href = '/profile';
       } else {
-        // Display other messages
         alert(data.message);
       }
     })
@@ -84,7 +111,7 @@ function handleLogin(username, password) {
       console.error('Error:', error);
       alert('An unexpected error occurred. Please try again later.');
     });
-  }
+}
 
 function updateProfile(profileData) {
     fetch('/api/user/profile', {
@@ -130,3 +157,4 @@ function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
+```
