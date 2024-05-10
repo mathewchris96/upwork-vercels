@@ -75,7 +75,8 @@ router.get('/logout', requireAuth, (req, res) => {
       return res.status(500).json({ message: 'Error logging out', error: err });
     }
     res.clearCookie('connect.sid');
-    res.status(200).json({ message: 'User logged out successfully' });
+    // Modified line: Redirecting user to index page after successful logout
+    res.redirect('/');
   });
 });
 
@@ -99,5 +100,3 @@ router.get('/profile', requireAuth, async (req, res) => {
     res.status(500).render('error', { message: 'Error retrieving user data', error: error.message });
   }
 });
-
-module.exports = router;
