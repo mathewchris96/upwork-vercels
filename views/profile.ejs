@@ -22,8 +22,9 @@
             <p><strong>Username:</strong> <%= user.username ? user.username : 'Not provided' %></p>
             <p><strong>Email:</strong> <%= user.email ? user.email : 'Not provided' %></p>
             <p><strong>Domain of Interest:</strong> <%= user.domainOfInterest ? user.domainOfInterest : 'Not specified' %></p>
-            <!-- New bio element -->
-            <p><strong>Bio:</strong> <%= user.bio ? user.bio : 'Not specified' %></p>
+            <p><strong>Linkedin URL:</strong> <%= user.linkedinUrl ? user.linkedinUrl : 'Not specified' %></p>
+            <p><strong>Current Company:</strong> <%= user.currentCompany ? user.currentCompany : 'Not specified' %></p>
+            <p><strong>Current Level:</strong> <%= user.currentLevel ? user.currentLevel : 'Not specified' %></p>
         </section>
         <section id="applied-jobs">
             <h2>Applied Jobs</h2>
@@ -74,4 +75,3 @@
     </script>
     <script src="/js/interactivity.js"></script>
 </body>
-</html>
