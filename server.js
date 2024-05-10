@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 const authRoutes = require('./routes/authRoutes');
 const jobRoutes = require('./routes/jobRoutes');
+const authMiddleware = require('./routes/middleware/authMiddleware');
 
 mongoose.connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
@@ -32,6 +33,7 @@ app.set('view engine', 'ejs');
 
 app.use(authRoutes);
 app.use(jobRoutes);
+app.use(authMiddleware);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -41,3 +43,4 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+```
