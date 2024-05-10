@@ -59,5 +59,4 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
     throw new Error('Comparing password failed');
   }
 };
-
 module.exports = mongoose.model('User', userSchema);
