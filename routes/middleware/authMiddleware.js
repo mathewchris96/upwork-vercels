@@ -38,4 +38,3 @@ const requireRole = (role) => {
 };
 
 module.exports = { requireAuth, alreadyLoggedIn, requireRole };
-```
