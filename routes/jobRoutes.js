@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Job = require('../models/Job');
-const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
+const { requireAuth, alreadyLoggedIn, anotherAuthFunction } = require('./middleware/authMiddleware');
 
 router.get('/jobpost', (req, res) => {
   res.render('jobpost.ejs');
@@ -9,8 +9,8 @@ router.get('/jobpost', (req, res) => {
 
 router.post('/jobpost', requireAuth, async (req, res) => {
   try {
-    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, contactEmail } = req.body; // Added contactEmail field
-    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, contactEmail }); // Added contactEmail to the job data
+    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
+    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink });
     await job.save();
     res.status(201).json({ message: 'Posted job successfully', job });
   } catch (error) {
@@ -19,7 +19,7 @@ router.post('/jobpost', requireAuth, async (req, res) => {
   }
 });
 
-router.get('/jobs', async (req, res) => {
+router.get('/jobs', anotherAuthFunction, async (req, res) => {
   try {
     const jobs = await Job.find({});
     res.render('jobListing.ejs', { jobs });
