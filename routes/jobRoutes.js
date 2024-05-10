@@ -7,7 +7,7 @@ router.get('/jobpost', (req, res) => {
   res.render('jobpost.ejs');
 });
 
-router.post('/apply', requireAuth, async (req, res) => {
+router.post('/jobpost', requireAuth, async (req, res) => {
   try {
     const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
     const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink });
@@ -30,4 +30,3 @@ router.get('/jobs', async (req, res) => {
 });
 
 module.exports = router;
-```
