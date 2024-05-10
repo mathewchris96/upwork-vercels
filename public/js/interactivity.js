@@ -115,6 +115,15 @@ function updateProfile(profileData) {
 }
 
 function submitJobPosting(jobData) {
+  if (!jobData.jobTitle || !jobData.jobDescription || !jobData.jobRequirements || !jobData.jobCategory) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  if (typeof jobData.jobRequirements === 'string') {
+    jobData.jobRequirements = jobData.jobRequirements.split(',').map(requirement => requirement.trim());
+  }
+
   fetch('/jobs/post', {
     method: 'POST',
     headers: {
