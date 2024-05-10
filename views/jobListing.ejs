@@ -5,23 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        @media (max-width: 600px) {
+            .job-listings-container {
+                flex-direction: column;
+            }
+        }
+        @media (min-width: 601px) {
+            .job-listings-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .job-listing {
+                width: 45%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <% if(jobs && jobs.length > 0) { %>
-            <% jobs.forEach(function(job) { %>
-                <div class="job-listing">
-                    <h2><%= job.companyName %></h2>
-                    <p>Role: <%= job.role %></p>
-                    <p>Domain: <%= job.domain %></p>
-                    <p>Location: <%= job.location %></p>
-                    <p>Skills Required: <%= job.skillsRequired.join(', ') %></p>
-                    <p>Nature of Work: <%= job.natureOfWork %></p>
-                    <a href="<%= job.jobPostingLink %>" class="apply-button">Apply</a>
-                </div>
-            <% }); %>
+            <div class="job-listings-container">
+                <% jobs.forEach(function(job) { %>
+                    <div class="job-listing" style="margin: 20px; padding: 10px; background-color: var(--light-background); border: 1px solid var(--border-color); box-shadow: 0px 4px 6px rgba(0,0,0,0.1);">
+                        <h2><%= job.companyName %></h2>
+                        <p>Role: <%= job.role %></p>
+                        <p>Domain: <%= job.domain %></p>
+                        <p>Location: <%= job.location %></p>
+                        <p>Skills Required: <%= job.skillsRequired.join(', ') %></p>
+                        <p>Nature of Work: <%= job.natureOfWork %></p>
+                        <a href="<%= job.jobPostingLink %>" class="apply-button" style="font-size: 14px; padding: 10px 15px; background-color: var(--primary-color); color: var(--text-on-primary); text-decoration: none;">Apply</a>
+                    </div>
+                <% }); %>
+            </div>
         <% } else { %>
-            <p>No job listings available at the moment.</p>
+            <div class="empty-state" style="text-align: center; padding: 20px; margin-top: 20px; background-color: var(--light-background); color: var(--text-color);">
+                <p>No job listings available at the moment.</p>
+            </div>
         <% } %>
     </div>
 </body>
+</html>
