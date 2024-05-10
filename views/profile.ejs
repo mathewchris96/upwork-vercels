@@ -100,22 +100,23 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/jobs">Jobs</a></li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <nav class="header-nav">
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/jobs">Jobs</a>
+            <a class="nav-link" href="/logout">Logout</a>
         </nav>
     </header>
     <main>
-        <section id="user-details">
+        <section id="user-details" class="main-content">
             <h2>User Profile</h2>
             <p><strong>Username:</strong> <%= user.username ? user.username : 'Not provided' %></p>
             <p><strong>Email:</strong> <%= user.email ? user.email : 'Not provided' %></p>
             <p><strong>Domain of Interest:</strong> <%= user.domainOfInterest ? user.domainOfInterest : 'Not specified' %></p>
         </section>
-        <section id="applied-jobs">
+        <section id="applied-jobs" class="main-content">
             <h2>Applied Jobs</h2>
             <% if(user.jobsAppliedFor && user.jobsAppliedFor.length > 0) { %>
                 <ul>
@@ -132,7 +133,7 @@
                 </ul>
             <% } else { %>
                 <p>You have not applied for any jobs yet.</p>
-            <% } %>
+                <% } %>
         </section>
     </main>
     <script>
