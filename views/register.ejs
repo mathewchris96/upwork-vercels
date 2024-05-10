@@ -41,16 +41,14 @@
             box-sizing: border-box;
         }
         select {
-            /* Additional styling for the dropdown */
             appearance: none;
             -moz-appearance: none;
             -webkit-appearance: none;
-            padding-right: 30px; /* Adjust based on the width of the arrow icon */
-            background-image: url('path_to_arrow_icon'); /* Add an arrow icon */
+            padding-right: 30px;
+            background-image: url('path_to_arrow_icon');
             background-position: right center;
             background-repeat: no-repeat;
         }
-        /* Style the dropdown arrow */
         select::-ms-expand {
             display: none;
         }
@@ -74,7 +72,7 @@
             color: #007bff;
         }
     </style>
-    <link rel="stylesheet" href="css/style.css"> <!-- Keeping the original stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
@@ -142,7 +140,9 @@
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
+        <p>Thank you for registering! <a href="/login" class="btn btn-success">Proceed to Login</a></p>
         <p>Already have an account? <a href="/login">Login here</a>.</p>
     </div>
     <script src="js/interactivity.js"></script> 
 </body>
+</html>

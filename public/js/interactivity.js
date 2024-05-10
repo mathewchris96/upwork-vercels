@@ -73,6 +73,13 @@ function applyJob(body) {
 }
 
 function handleLogin(username, password) {
+  const registrationSuccess = sessionStorage.getItem('registrationSuccess');
+  if (registrationSuccess) {
+    sessionStorage.removeItem('registrationSuccess');
+    window.location.href = '/login.ejs';
+    return;
+  }
+
   fetch('/login', {
     method: 'POST',
     headers: {

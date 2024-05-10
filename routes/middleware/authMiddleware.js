@@ -37,4 +37,13 @@ const requireRole = (role) => {
   };
 };
 
-module.exports = { requireAuth, alreadyLoggedIn, requireRole };
+const checkRegistrationComplete = (req, res, next) => {
+  if (req.session.registrationComplete) {
+    next();
+  } else {
+    res.redirect('/complete-registration');
+  }
+};
+
+module.exports = { requireAuth, alreadyLoggedIn, requireRole, checkRegistrationComplete };
+```
