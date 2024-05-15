@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../models/User');
 const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
 
+router.use('/styles', express.static('styles'));
+
 const validateUserInput = (username, password, email = '') => {
   const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if (!username || !password) return false;
@@ -35,7 +37,7 @@ router.post('/register', async (req, res) => {
     const user = new User({ username, password, email, domainOfInterest, linkedinUrl, currentCompany, currentLevel });
     await user.save();
     req.session.userId = user._id;
-    res.redirect('/login'); // Modified line: Redirecting user to login page after successful registration
+    res.redirect('/login');
   } catch (error) {
     res.status(500).json({ message: 'Error registering user', error: error.message });
   }
@@ -75,7 +77,6 @@ router.get('/logout', requireAuth, (req, res) => {
       return res.status(500).json({ message: 'Error logging out', error: err });
     }
     res.clearCookie('connect.sid');
-    // Modified line: Redirecting user to index page after successful logout
     res.redirect('/');
   });
 });
@@ -100,6 +101,5 @@ router.get('/profile', requireAuth, async (req, res) => {
     res.status(500).render('error', { message: 'Error retrieving user data', error: error.message });
   }
 });
-
 
 module.exports = router;
