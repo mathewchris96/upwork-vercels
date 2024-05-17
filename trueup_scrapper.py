@@ -2,8 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+
 # Launching the browser
 driver = webdriver.Chrome()  # You can replace 'Chrome' with your preferred browser
 
@@ -46,18 +46,14 @@ try:
     all_jobs_button.click()
     print("Clicked on the All jobs button.")
     
-    # Assuming the login and navigation to the jobs page is successful as per the provided code
-
     # Wait for the job listings to load
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, ".mb-3.card"))
     )
 
-    # Find all job listing divs
-    job_listings = driver.find_elements(By.CSS_SELECTOR, ".mb-3.card")
-
-    # Initialize an empty list to store job information
+    # Initialize an empty list to store job information in a dictionary format
     jobs_info = []
+
     try:
         while len(jobs_info) < 1000:
             # Wait for the job listings to load
@@ -68,43 +64,43 @@ try:
             # Find all job listing divs
             job_listings = driver.find_elements(By.CSS_SELECTOR, ".mb-3.card")
 
-            # Loop through each job listing to extract information
+            # Loop through each job listing to extract information and store it in a dictionary
             for job in job_listings:
                 if len(jobs_info) >= 1000:
                     break  # Break the loop if we have collected 1000 job entries
 
-                # Extracting job information as before
+                job_info = {}  # Initialize an empty dictionary for this job's information
                 try:
-                    job_title = job.find_element(By.CSS_SELECTOR, "div.fw-bold.mb-1 a").text
+                    job_info['job_title'] = job.find_element(By.CSS_SELECTOR, "div.fw-bold.mb-1 a").text
                 except NoSuchElementException:
-                    job_title = "N/A"
+                    job_info['job_title'] = "N/A"
 
                 try:
-                    company_name = job.find_element(By.CSS_SELECTOR, "div.mb-2.align-items-baseline a").text
+                    job_info['company_name'] = job.find_element(By.CSS_SELECTOR, "div.mb-2.align-items-baseline a").text
                 except NoSuchElementException:
-                    company_name = "N/A"
+                    job_info['company_name'] = "N/A"
 
                 try:
-                    location = job.find_element(By.CSS_SELECTOR, "div.overflow-hidden.text-secondary.mb-2").text
+                    job_info['location'] = job.find_element(By.CSS_SELECTOR, "div.overflow-hidden.text-secondary.mb-2").text
                 except NoSuchElementException:
-                    location = "N/A"
+                    job_info['location'] = "N/A"
 
                 try:
-                    time_posted = job.find_element(By.CSS_SELECTOR, "div.overflow-hidden.text-secondary.small.mb-2").text
+                    job_info['time_posted'] = job.find_element(By.CSS_SELECTOR, "div.overflow-hidden.text-secondary.small.mb-2").text
                 except NoSuchElementException:
-                    time_posted = "N/A"
+                    job_info['time_posted'] = "N/A"
 
                 try:
-                    salary_range = job.find_element(By.CSS_SELECTOR, "div.overflow-hidden.small.mb-2").text
+                    job_info['salary_range'] = job.find_element(By.CSS_SELECTOR, "div.overflow-hidden.small.mb-2").text
                 except NoSuchElementException:
-                    salary_range = "N/A"
+                    job_info['salary_range'] = "N/A"
 
                 try:
-                    job_link = job.find_element(By.CSS_SELECTOR, "div.fw-bold.mb-1 a").get_attribute('href')
+                    job_info['job_link'] = job.find_element(By.CSS_SELECTOR, "div.fw-bold.mb-1 a").get_attribute('href')
                 except NoSuchElementException:
-                    job_link = "N/A"
+                    job_info['job_link'] = "N/A"
 
-                jobs_info.append([job_title, company_name, location, time_posted, salary_range, job_link])
+                jobs_info.append(job_info)  # Add the job's information dictionary to the list
 
             # Click the "Show more" button if it exists and is visible
             try:
