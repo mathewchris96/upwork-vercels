@@ -2,8 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+import json  # Importing the json module
+
 # Launching the browser
 driver = webdriver.Chrome()  # You can replace 'Chrome' with your preferred browser
 
@@ -46,18 +47,14 @@ try:
     all_jobs_button.click()
     print("Clicked on the All jobs button.")
     
-    # Assuming the login and navigation to the jobs page is successful as per the provided code
-
     # Wait for the job listings to load
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, ".mb-3.card"))
     )
 
-    # Find all job listing divs
-    job_listings = driver.find_elements(By.CSS_SELECTOR, ".mb-3.card")
-
     # Initialize an empty list to store job information
     jobs_info = []
+    company_jobs_count = {}  # Dictionary to count job postings per company
     try:
         while len(jobs_info) < 1000:
             # Wait for the job listings to load
@@ -73,7 +70,7 @@ try:
                 if len(jobs_info) >= 1000:
                     break  # Break the loop if we have collected 1000 job entries
 
-                # Extracting job information as before
+                # Extracting job information
                 try:
                     job_title = job.find_element(By.CSS_SELECTOR, "div.fw-bold.mb-1 a").text
                 except NoSuchElementException:
@@ -83,6 +80,12 @@ try:
                     company_name = job.find_element(By.CSS_SELECTOR, "div.mb-2.align-items-baseline a").text
                 except NoSuchElementException:
                     company_name = "N/A"
+
+                # Counting job postings per company
+                if company_name not in company_jobs_count:
+                    company_jobs_count[company_name] = 1
+                else:
+                    company_jobs_count[company_name] += 1
 
                 try:
                     location = job.find_element(By.CSS_SELECTOR, "div.overflow-hidden.text-secondary.mb-2").text
@@ -118,12 +121,14 @@ try:
     except Exception as e:
         print("An error occurred while collecting job listings:", e)
 
-    # Print the entire output
-    for job in jobs_info:
-        print(job)
+    # Serialize the data into JSON format and write it to `hiring_data.json` in the `public` directory
+    jobs_data = [{"companyName": company_name, "jobPostings": job_postings} for company_name, job_postings in company_jobs_count.items()]
+    with open('public/hiring_data.json', 'w') as json_file:
+        json.dump(jobs_data, json_file)
 
 except Exception as e:
     print("An error occurred during login or navigation:", e)
 
 # Closing the browser
 driver.quit()
+```
