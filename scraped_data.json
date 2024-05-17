@@ -1,0 +1,12 @@
+import json
+
+# Create a dictionary to store the scraped data
+scraped_data = {
+    "data1": "value1",
+    "data2": "value2",
+    # Add more data as needed
+}
+
+# Write the scraped data to "scraped_data.json"
+with open('scraped_data.json', 'w') as file:
+    json.dump(scraped_data, file)
