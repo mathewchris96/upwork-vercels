@@ -1,0 +1,34 @@
+{
+  "hiringData": [
+    {
+      "companyName": "Tech Innovations Inc.",
+      "positions": [
+        {
+          "title": "Frontend Developer",
+          "skills": ["React", "CSS", "JavaScript"],
+          "salary": "80,000 - 100,000"
+        },
+        {
+          "title": "Backend Developer",
+          "skills": ["Node.js", "Express", "MongoDB"],
+          "salary": "85,000 - 105,000"
+        }
+      ]
+    },
+    {
+      "companyName": "Future Tech Solutions",
+      "positions": [
+        {
+          "title": "Data Scientist",
+          "skills": ["Python", "TensorFlow", "Data Analysis"],
+          "salary": "90,000 - 120,000"
+        },
+        {
+          "title": "AI Engineer",
+          "skills": ["Machine Learning", "Python", "Neural Networks"],
+          "salary": "100,000 - 130,000"
+        }
+      ]
+    }
+  ]
+}
