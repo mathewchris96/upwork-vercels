@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,65 +34,41 @@
 </head>
 <body>
     <h1>Company Rankings</h1>
+    <div id="companies-container"></div>
+
+<script>
+const companiesData = [
+    { name: "Apple Inc.", founded: "1976", headquarters: "Cupertino, California, USA", industry: "Technology" },
+    { name: "Microsoft Corporation", founded: "1975", headquarters: "Redmond, Washington, USA", industry: "Technology" },
+    { name: "Amazon.com, Inc.", founded: "1994", headquarters: "Seattle, Washington, USA", industry: "Technology, E-commerce" },
+    { name: "Alphabet Inc. (Google)", founded: "1998", headquarters: "Mountain View, California, USA", industry: "Technology, Internet" },
+    { name: "Facebook, Inc.", founded: "2004", headquarters: "Menlo Park, California, USA", industry: "Technology, Social Media" },
+    { name: "Samsung Electronics Co., Ltd.", founded: "1969", headquarters: "Suwon, South Korea", industry: "Technology, Electronics" },
+    { name: "Intel Corporation", founded: "1968", headquarters: "Santa Clara, California, USA", industry: "Technology, Semiconductors" },
+    { name: "IBM (International Business Machines Corporation)", founded: "1911", headquarters: "Armonk, New York, USA", industry: "Technology, IT Services" },
+    { name: "Tencent Holdings Limited", founded: "1998", headquarters: "Shenzhen, China", industry: "Technology, Internet" },
+    { name: "NVIDIA Corporation", founded: "1993", headquarters: "Santa Clara, California, USA", industry: "Technology, Semiconductors" }
+];
+
+function generateCompanyHTML(company) {
+    return `
     <div class="company">
-        <h2>Apple Inc.</h2>
-        <p>Founded: 1976</p>
-        <p>Headquarters: Cupertino, California, USA</p>
-        <p>Industry: Technology</p>
+        <h2>${company.name}</h2>
+        <p>Founded: ${company.founded}</p>
+        <p>Headquarters: ${company.headquarters}</p>
+        <p>Industry: ${company.industry}</p>
     </div>
-    <div class="company">
-        <h2>Microsoft Corporation</h2>
-        <p>Founded: 1975</p>
-        <p>Headquarters: Redmond, Washington, USA</p>
-        <p>Industry: Technology</p>
-    </div>
-    <div class="company">
-        <h2>Amazon.com, Inc.</h2>
-        <p>Founded: 1994</p>
-        <p>Headquarters: Seattle, Washington, USA</p>
-        <p>Industry: Technology, E-commerce</p>
-    </div>
-    <div class="company">
-        <h2>Alphabet Inc. (Google)</h2>
-        <p>Founded: 1998</p>
-        <p>Headquarters: Mountain View, California, USA</p>
-        <p>Industry: Technology, Internet</p>
-    </div>
-    <div class="company">
-        <h2>Facebook, Inc.</h2>
-        <p>Founded: 2004</p>
-        <p>Headquarters: Menlo Park, California, USA</p>
-        <p>Industry: Technology, Social Media</p>
-    </div>
-    <div class="company">
-        <h2>Samsung Electronics Co., Ltd.</h2>
-        <p>Founded: 1969</p>
-        <p>Headquarters: Suwon, South Korea</p>
-        <p>Industry: Technology, Electronics</p>
-    </div>
-    <div class="company">
-        <h2>Intel Corporation</h2>
-        <p>Founded: 1968</p>
-        <p>Headquarters: Santa Clara, California, USA</p>
-        <p>Industry: Technology, Semiconductors</p>
-    </div>
-    <div class="company">
-        <h2>IBM (International Business Machines Corporation)</h2>
-        <p>Founded: 1911</p>
-        <p>Headquarters: Armonk, New York, USA</p>
-        <p>Industry: Technology, IT Services</p>
-    </div>
-    <div class="company">
-        <h2>Tencent Holdings Limited</h2>
-        <p>Founded: 1998</p>
-        <p>Headquarters: Shenzhen, China</p>
-        <p>Industry: Technology, Internet</p>
-    </div>
-    <div class="company">
-        <h2>NVIDIA Corporation</h2>
-        <p>Founded: 1993</p>
-        <p>Headquarters: Santa Clara, California, USA</p>
-        <p>Industry: Technology, Semiconductors</p>
-    </div>
+    `;
+}
+
+function displayCompanies() {
+    const container = document.getElementById('companies-container');
+    const companiesHTML = companiesData.map(generateCompanyHTML).join('');
+    container.innerHTML = companiesHTML;
+}
+
+displayCompanies();
+</script>
 </body>
 </html>
+```
