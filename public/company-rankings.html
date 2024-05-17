@@ -34,13 +34,13 @@
 </head>
 <body>
     <h1>Company Rankings</h1>
-    <script src="hiring_data.json"></script>
+    <div id="rankings-list"></div>
     <script>
         fetch('hiring_data.json')
         .then(response => response.json())
         .then(data => {
             const sortedCompanies = data.sort((a, b) => b.jobPostings - a.jobPostings).slice(0, 10);
-            const rankingsList = document.createElement('div');
+            const rankingsList = document.getElementById('rankings-list');
             sortedCompanies.forEach(company => {
                 const companyDiv = document.createElement('div');
                 companyDiv.classList.add('company');
@@ -52,10 +52,7 @@
                 companyDiv.appendChild(jobPostings);
                 rankingsList.appendChild(companyDiv);
             });
-            document.body.innerHTML = '';
-            document.body.appendChild(rankingsList);
         });
     </script>
 </body>
 </html>
-```
