@@ -1,1 +1,2 @@
-npm start
+  python trueup_scrapper.py
+  
