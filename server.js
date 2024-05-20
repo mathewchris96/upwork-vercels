@@ -5,6 +5,8 @@ const MongoStore = require('connect-mongo');
 const path = require('path');
 require('dotenv').config();
 
+const { scheduleTrueupScrapper } = require('./trueupScheduler');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -37,6 +39,8 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
+scheduleTrueupScrapper();
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
