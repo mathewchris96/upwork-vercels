@@ -39,9 +39,25 @@
         fetch('hiring_data.json')
         .then(response => response.json())
         .then(data => {
-            const sortedCompanies = data.sort((a, b) => parseInt(b.jobPostings) - parseInt(a.jobPostings)).slice(0, 10);
+            const sortedCompanies = data
+                .filter(company => company.companyName !== 'N/A')  // Filter out "N/A" company names
+                .sort((a, b) => parseInt(b.jobPostings) - parseInt(a.jobPostings));
+                
+            const uniqueCompanyNames = new Set();
+            const uniqueCompanies = [];
+
+            for (let company of sortedCompanies) {
+                if (!uniqueCompanyNames.has(company.companyName)) {
+                    uniqueCompanies.push(company);
+                    uniqueCompanyNames.add(company.companyName);
+                }
+                if (uniqueCompanies.length >= 10) {
+                    break;
+                }
+            }
+
             const rankingsList = document.getElementById('rankings-list');
-            sortedCompanies.forEach(company => {
+            uniqueCompanies.forEach(company => {
                 const companyDiv = document.createElement('div');
                 companyDiv.classList.add('company');
                 const companyTitle = document.createElement('h2');
