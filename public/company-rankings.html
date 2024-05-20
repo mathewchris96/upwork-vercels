@@ -40,7 +40,7 @@
         .then(response => response.json())
         .then(data => {
             const sortedCompanies = data.sort((a, b) => parseInt(b.jobPostings) - parseInt(a.jobPostings)).slice(0, 10);
-            const uniqueCompanies = Array.from(new Map(sortedCompanies.map(company => [company['companyName'], company])).values());
+            const uniqueCompanies = removeDuplicates(sortedCompanies, 'companyName');
             const rankingsList = document.getElementById('rankings-list');
             uniqueCompanies.forEach(company => {
                 const companyDiv = document.createElement('div');
@@ -54,7 +54,10 @@
                 rankingsList.appendChild(companyDiv);
             });
         });
+        
+        function removeDuplicates(arr, key) {
+            return [...new Map(arr.map(item => [item[key], item])).values()];
+        }
     </script>
 </body>
 </html>
-```
