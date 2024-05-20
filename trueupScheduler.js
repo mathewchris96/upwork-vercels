@@ -1,8 +1,6 @@
-// Import necessary modules
 const { exec } = require('child_process');
 const cron = require('node-cron');
 
-// Define function to execute the Python script
 const executeTrueupScrapper = () => {
   exec('python trueup_scrapper.py', (error, stdout, stderr) => {
     if (error) {
@@ -13,12 +11,11 @@ const executeTrueupScrapper = () => {
   });
 };
 
-// Define function to schedule the execution of the Python script
 const scheduleTrueupScrapper = () => {
-  cron.schedule('0 0 */2 * *', () => {
+  cron.schedule('0 */3 * * *', () => {
     executeTrueupScrapper();
   });
 };
 
-// Export the scheduling function
-module.exports = { scheduleTrueupScrapper }; 
+module.exports = { scheduleTrueupScrapper };
+```
