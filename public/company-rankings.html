@@ -39,7 +39,8 @@
         fetch('hiring_data.json')
         .then(response => response.json())
         .then(data => {
-            const sortedCompanies = data.sort((a, b) => parseInt(b.jobPostings) - parseInt(a.jobPostings)).slice(0, 10);
+            const uniqueCompanies = Array.from(new Map(data.map(company => [company.companyName, company])).values());
+            const sortedCompanies = uniqueCompanies.sort((a, b) => parseInt(b.jobPostings) - parseInt(a.jobPostings)).slice(0, 10);
             const rankingsList = document.getElementById('rankings-list');
             sortedCompanies.forEach(company => {
                 const companyDiv = document.createElement('div');
@@ -56,3 +57,4 @@
     </script>
 </body>
 </html>
+```
