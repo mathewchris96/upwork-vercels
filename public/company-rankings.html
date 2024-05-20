@@ -40,7 +40,7 @@
         .then(response => response.json())
         .then(data => {
             const sortedCompanies = data.sort((a, b) => parseInt(b.jobPostings) - parseInt(a.jobPostings)).slice(0, 10);
-            const uniqueCompanies = new Set(sortedCompanies.map(company => company.companyName));
+            const uniqueCompanies = new Set(sortedCompanies.map(company => company.companyName.replace('N/A', '')));
             const rankingsList = document.getElementById('rankings-list');
             uniqueCompanies.forEach(companyName => {
                 const company = sortedCompanies.find(c => c.companyName === companyName);
