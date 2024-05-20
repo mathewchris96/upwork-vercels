@@ -18,4 +18,3 @@ const scheduleTrueupScrapper = () => {
 };
 
 module.exports = { scheduleTrueupScrapper };
-```
