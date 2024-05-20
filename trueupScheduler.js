@@ -12,9 +12,10 @@ const executeTrueupScrapper = () => {
 };
 
 const scheduleTrueupScrapper = () => {
-  cron.schedule('0 */3 * * *', () => {
+  cron.schedule('0 */2 * * *', () => {
     executeTrueupScrapper();
   });
 };
 
 module.exports = { scheduleTrueupScrapper };
+```
