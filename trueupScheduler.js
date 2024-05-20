@@ -22,4 +22,3 @@ const scheduleTrueupScrapper = () => {
 
 // Export the scheduling function
 module.exports = scheduleTrueupScrapper;
-```
