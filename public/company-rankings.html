@@ -40,8 +40,9 @@
         .then(response => response.json())
         .then(data => {
             const sortedCompanies = data.sort((a, b) => parseInt(b.jobPostings) - parseInt(a.jobPostings)).slice(0, 10);
+            const uniqueCompanies = Array.from(new Map(sortedCompanies.map(company => [company['companyName'], company])).values());
             const rankingsList = document.getElementById('rankings-list');
-            sortedCompanies.forEach(company => {
+            uniqueCompanies.forEach(company => {
                 const companyDiv = document.createElement('div');
                 companyDiv.classList.add('company');
                 const companyTitle = document.createElement('h2');
@@ -56,3 +57,4 @@
     </script>
 </body>
 </html>
+```
