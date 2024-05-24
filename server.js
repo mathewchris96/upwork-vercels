@@ -35,6 +35,11 @@ app.set('view engine', 'ejs');
 app.use(authRoutes);
 app.use(jobRoutes);
 
+// New route to serve layoff-tracker.html
+app.get('/layoff-tracker', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'layoff-tracker.html'));
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
@@ -45,3 +50,4 @@ scheduleTrueupScrapper();
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+```
