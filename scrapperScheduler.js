@@ -23,4 +23,3 @@ function scheduleScrapper() {
 
 // Export scheduleScrapper for use in other files
 module.exports = scheduleScrapper;
-```
