@@ -20,6 +20,10 @@
     <main>
         <div id="layoff-data-industry"></div>
         <canvas id="layoffChartIndustry" width="400" height="200"></canvas>
+        <!-- Added section for displaying industry links dynamically -->
+        <div>
+            <ul id="industry-links"></ul>
+        </div>
     </main>
     <script>
         function parseLayoffDataByIndustry(data) {
@@ -83,5 +87,8 @@
                 layoffDataContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
             });
     </script>
+    <!-- Link to the new JavaScript file -->
+    <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
+```
