@@ -44,6 +44,10 @@
             return layoffPerMonth;
         }
 
+        function sortDataDescending(layoffData) {
+            return Object.keys(layoffData).sort((a, b) => layoffData[b] - layoffData[a]);
+        }
+
         fetch('layoff.json')
             .then(response => {
                 if (!response.ok) {
@@ -54,17 +58,17 @@
             .then(data => {
                 const layoffPerMonth = parseLayoffData(data);
 
-                const labels = Object.keys(layoffPerMonth).sort();
-                const values = labels.map(label => layoffPerMonth[label]);
+                const sortedLabels = sortDataDescending(layoffPerMonth);
+                const sortedValues = sortedLabels.map(label => layoffPerMonth[label]);
 
                 const ctx = document.getElementById('layoffChart').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: labels,
+                        labels: sortedLabels,
                         datasets: [{
                             label: 'Number of Layoffs',
-                            data: values,
+                            data: sortedValues,
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1
@@ -87,3 +91,4 @@
     </script>
 </body>
 </html>
+```
