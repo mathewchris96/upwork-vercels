@@ -6,6 +6,29 @@
     <title>Layoff Tracker by Industry</title>
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #industry-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+        }
+        #industry-links a {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #industry-links a:hover {
+            background-color: #0056b3;
+        }
+        #layoffChartIndustry {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -18,8 +41,8 @@
         </nav>
     </header>
     <main>
-        <div id="layoff-data-industry"></div>
-        <canvas id="layoffChartIndustry" width="400" height="200"></canvas>
+        <div id="industry-links"></div>
+        <canvas id="layoffChartIndustry" width="800" height="400" style="display:none;"></canvas>
     </main>
     <script>
         function parseLayoffDataByIndustry(data) {
@@ -34,12 +57,65 @@
 
                 const industry = item[2];
                 const layoffs = item[5];
+                const date = new Date(item[6]);
 
                 if (layoffs !== 'Number of employees laid off not available' && !isNaN(layoffs)) {
-                    layoffsByIndustry[industry] = (layoffsByIndustry[industry] || 0) + parseInt(layoffs);
+                    if (!layoffsByIndustry[industry]) {
+                        layoffsByIndustry[industry] = [];
+                    }
+                    layoffsByIndustry[industry].push({ layoffs: parseInt(layoffs), date: date });
                 }
             }
             return layoffsByIndustry;
+        }
+
+        function getLastSixMonthsLayoffs(layoffData) {
+            const today = new Date();
+            const layoffsPerMonth = {};
+
+            layoffData.forEach(item => {
+                const layoffDate = new Date(item.date);
+                const monthDifference = (today.getFullYear() - layoffDate.getFullYear()) * 12 + (today.getMonth() - layoffDate.getMonth());
+                if (monthDifference < 6) {
+                    const monthYearKey = `${layoffDate.getMonth() + 1}-${layoffDate.getFullYear()}`;
+                    layoffsPerMonth[monthYearKey] = (layoffsPerMonth[monthYearKey] || 0) + item.layoffs;
+                }
+            });
+
+            return layoffsPerMonth;
+        }
+
+        function displayIndustryChart(industry, data) {
+            const layoffsPerMonth = getLastSixMonthsLayoffs(data);
+
+            const labels = Object.keys(layoffsPerMonth);
+            const values = labels.map(label => layoffsPerMonth[label]);
+
+            const ctx = document.getElementById('layoffChartIndustry').getContext('2d');
+            document.getElementById('layoffChartIndustry').style.display = 'block';
+            if (window.industryChart) {
+                window.industryChart.destroy();
+            }
+            window.industryChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Number of Layoffs for ${industry} (Last 6 Months)`,
+                        data: values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
 
         fetch('layoff.json')
@@ -52,36 +128,23 @@
             .then(data => {
                 const layoffsByIndustry = parseLayoffDataByIndustry(data);
 
-                const labels = Object.keys(layoffsByIndustry);
-                const values = labels.map(label => layoffsByIndustry[label]);
-
-                const ctx = document.getElementById('layoffChartIndustry').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Number of Layoffs by Industry',
-                            data: values,
-                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                            borderColor: 'rgba(153, 102, 255, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
+                const industryLinksContainer = document.getElementById('industry-links');
+                Object.keys(layoffsByIndustry).forEach(industry => {
+                    const link = document.createElement('a');
+                    link.href = "#";
+                    link.innerText = industry;
+                    link.onclick = () => {
+                        displayIndustryChart(industry, layoffsByIndustry[industry]);
+                    };
+                    industryLinksContainer.appendChild(link);
                 });
             })
             .catch(error => {
                 console.error('Fetch error:', error);
-                const layoffDataContainer = document.getElementById('layoff-data-industry');
-                layoffDataContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
+                const industryLinksContainer = document.getElementById('industry-links');
+                industryLinksContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
             });
     </script>
+    <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
