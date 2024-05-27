@@ -28,6 +28,7 @@
     <h1>Total number of Tech Layoffs</h1>
     <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
     <div id="layoff-data"></div>
+    <div id="summary-2024" style="text-align: center; margin: 20px auto; font-size: 20px;"></div>
     <canvas id="layoffChart" width="400" height="200"></canvas>
 
     <script>
@@ -48,7 +49,7 @@
 
                 if (layoffs !== 'Number of employees laid off not available' && !isNaN(layoffs)) {
                     const layoffDate = new Date(date);
-                    if (isNaN(layoffDate)) {
+                    if (isNaN(layoffDate.getTime())) {
                         console.error(`Data format error for key ${key}: Invalid date format.`);
                         continue;
                     }
@@ -63,6 +64,19 @@
             return layoffPerMonth;
         }
 
+        function calculateTotalLayoffsFor2024(data) {
+            let totalLayoffs = 0;
+            data.forEach(item => {
+                if (item.length >= 7 && new Date(item[6]).getFullYear() === 2024) {
+                    const layoffs = parseInt(item[5]);
+                    if (!isNaN(layoffs)) {
+                        totalLayoffs += layoffs;
+                    }
+                }
+            });
+            document.getElementById('summary-2024').innerText = `Total layoffs in 2024: ${totalLayoffs}`;
+        }
+
         fetch('layoff.json')
             .then(response => {
                 if (!response.ok) {
@@ -72,7 +86,7 @@
             })
             .then(data => {
                 const layoffPerMonth = parseLayoffData(data);
-
+                calculateTotalLayoffsFor2024(data);
                 const labels = Object.keys(layoffPerMonth).sort();
                 const values = labels.map(label => layoffPerMonth[label]);
 
@@ -106,3 +120,4 @@
     </script>
 </body>
 </html>
+```
