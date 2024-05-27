@@ -110,7 +110,7 @@ button:focus {
 
 footer {
     background-color: #000;
-    color: #000; /* Corrected color to white for visibility */
+    color: #fff; /* Corrected color to white for visibility */
     padding: 20px;
     text-align: center;
     text-shadow: none;
@@ -180,3 +180,67 @@ footer {
 }
 
 /* End of new CSS for layoff-tracker.html */
+
+/* Start of new CSS for layoff-industry-tracker.html */
+
+.layoff-industry-tracker-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.bar-graph-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.bar-graph {
+    height: 30px;
+    background-color: #007fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.bar-graph:hover {
+    background-color: #0056b9;
+}
+
+.bar-label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.layoff-industry-tracker-container .layoff-tracker-table th {
+    background-color: #009fff; /* Slightly different shade for industry tracker */
+}
+
+.layoff-industry-tracker-container .layoff-tracker-table td a {
+    color: #009fff; /* Ensuring links within the table have a distinct style */
+}
+
+.layoff-industry-tracker-container .layoff-tracker-table td a:hover {
+    color: #0076d1; /* Different hover color for links within the industry tracker */
+}
+
+/* Responsive adjustments for layoff-industry-tracker */
+@media (max-width: 768px) {
+    .layoff-industry-tracker-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .bar-graph-container {
+        flex-direction: column;
+    }
+
+    .bar-graph {
+        height: 20px; /* Adjusted for smaller screens */
+    }
+}
+
+/* End of new CSS for layoff-industry-tracker.html */
