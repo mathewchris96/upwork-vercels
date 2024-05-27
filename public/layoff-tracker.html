@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layoff Tracker</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="layoff-data"></div>
     <canvas id="layoffChart" width="400" height="200"></canvas>
-    <a href="layoff-tracker-industry.html">Layoffs by tech sector</a>
+    <a href="layoff-tracker-industry.html" style="text-decoration:none; color: #007bff; font-weight: bold;">Layoffs by tech sector</a>
 
     <script>
         function parseLayoffData(data) {
