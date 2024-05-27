@@ -11,9 +11,19 @@
         margin: 0;
         padding: 20px;
     }
-    h1 {
+    h1, .navigation {
         text-align: center;
         color: #333;
+    }
+    .navigation a {
+        color: #333;
+        text-decoration: none;
+        background-color: #fff;
+        padding: 10px 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        display: inline-block;
     }
     .company {
         background-color: #fff;
@@ -33,6 +43,9 @@
 </style>
 </head>
 <body>
+    <div class="navigation">
+        <a href="layoff-tracker.html">Layoff Tracker</a>
+    </div>
     <h1>Company Rankings</h1>
     <div id="rankings-list"></div>
     <script>
@@ -72,3 +85,4 @@
     </script>
 </body>
 </html>
+```
