@@ -102,7 +102,6 @@ button:focus {
     outline: 3px solid #007bff;
 }
 
-
 @media (max-width: 768px) {
     .container {
         width: 95%;
@@ -111,10 +110,73 @@ button:focus {
 
 footer {
     background-color: #000;
-    color: #000; /* Corrected color to white for visibility */
+    color: #fff; /* Corrected color to white for visibility */
     padding: 20px;
     text-align: center;
     text-shadow: none;
     z-index: 1000;
     position: relative;
 }
+
+/* Start of new CSS for layoff-tracker.html */
+
+.layoff-tracker-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.layoff-tracker-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.layoff-tracker-table th,
+.layoff-tracker-table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+}
+
+.layoff-tracker-table th {
+    background-color: #007fff;
+    color: #ffffff;
+}
+
+.layoff-tracker-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.layoff-tracker-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.layoff-tracker-table td a {
+    color: #007fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.layoff-tracker-table td a:hover {
+    color: #0056b9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .layoff-tracker-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .layoff-tracker-table th,
+    .layoff-tracker-table td {
+        padding: 8px;
+    }
+}
+
+/* End of new CSS for layoff-tracker.html */

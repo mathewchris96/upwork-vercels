@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layoff Tracker</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div id="layoff-data"></div>
+
+    <script>
+        // Fetching layoff data
+        fetch('layoff.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Sort data by date
+                data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                // Calculate layoffs per month for the last 6 months
+                const today = new Date();
+                const layoffPerMonth = {};
+                data.forEach(item => {
+                    const layoffDate = new Date(item.date);
+                    const monthDifference = (today.getFullYear() - layoffDate.getFullYear()) * 12 + (today.getMonth() - layoffDate.getMonth());
+                    if (monthDifference < 6) {
+                        const monthYearKey = `${layoffDate.getMonth() + 1}-${layoffDate.getFullYear()}`;
+                        layoffPerMonth[monthYearKey] = (layoffPerMonth[monthYearKey] || 0) + item.layoffs;
+                    }
+                });
+
+                // Dynamically generate HTML for each month's layoffs and append to 'layoff-data'
+                const layoffDataContainer = document.getElementById('layoff-data');
+                Object.keys(layoffPerMonth).forEach(monthYear => {
+                    const div = document.createElement('div');
+                    div.innerText = `${monthYear}: ${layoffPerMonth[monthYear]} layoffs`;
+                    layoffDataContainer.appendChild(div);
+                });
+            })
+            .catch(error => {
+                // Handle errors during fetch operation
+                console.error('Fetch error: ', error);
+                const layoffDataContainer = document.getElementById('layoff-data');
+                layoffDataContainer.innerHTML = '<p>Error loading layoff data.</p>';
+            });
+    </script>
+</body>
+</html>
+```
