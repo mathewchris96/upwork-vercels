@@ -39,12 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     window.location.href = '/jobpost';
   });
-});
 
-const express = require('express');
-const router = express.Router();
-const Job = require('../models/Job');
-const { requireAuth } = require('./middleware/authMiddleware');
+  if (window.location.pathname === '/layoff-tracker-industry.html') {
+    renderIndustryLayoffGraph();
+  }
+});
 
 function applyJob(body) {
   fetch('/jobpost', {
@@ -146,4 +145,47 @@ function submitJobPosting(jobData) {
 function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
+}
+
+function renderIndustryLayoffGraph() {
+  fetch('layoff.json')
+    .then(response => response.json())
+    .then(data => {
+      const industryData = processIndustryData(data);
+      const ctx = document.getElementById('industryLayoffGraph').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(industryData),
+          datasets: [{
+            label: '# of Layoffs',
+            data: Object.values(industryData),
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    })
+    .catch(error => console.error('Error loading or processing layoff.json:', error));
+}
+
+function processIndustryData(data) {
+  return data.reduce((acc, cur) => {
+    acc[cur.industry] = (acc[cur.industry] || 0) + 1;
+    return acc;
+  }, {});
 }

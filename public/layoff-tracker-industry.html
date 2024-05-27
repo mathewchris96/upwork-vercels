@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layoff Tracker by Industry</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div id="industryLayoffGraph">
+        <!-- Placeholder for the bar graph -->
+    </div>
+    <script src="js/interactivity.js"></script>
+    <script>
+        // Assuming basic fetch and chart rendering logic
+        fetch('layoff.json')
+            .then(response => response.json())
+            .then(data => {
+                const aggregatedData = aggregateDataByIndustry(data);
+                renderBarGraph('industryLayoffGraph', aggregatedData);
+            })
+            .catch(error => {
+                console.error('Error loading layoff data:', error);
+                document.getElementById('industryLayoffGraph').innerText = 'Failed to load layoff data.';
+            });
+
+        function aggregateDataByIndustry(data) {
+            // Basic example aggregation logic
+            return data.reduce((acc, curr) => {
+                if (!acc[curr.industry]) {
+                    acc[curr.industry] = 1;
+                } else {
+                    acc[curr.industry] += 1;
+                }
+                return acc;
+            }, {});
+        }
+
+        function renderBarGraph(elementId, data) {
+            // Placeholder for graph rendering function
+            console.log(`Rendering graph on ${elementId} with data`, data);
+        }
+    </script>
+</body>
+</html>
+```
