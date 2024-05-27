@@ -5,50 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layoff Tracker</title>
     <link rel="stylesheet" href="styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="layoff-data"></div>
+    <canvas id="layoffChart" width="400" height="200"></canvas>
 
     <script>
-        // Fetching layoff data
+        function parseLayoffData(data) {
+            const today = new Date();
+            const layoffPerMonth = {};
+
+            for (const key in data) {
+                const item = data[key];
+                if (item.length < 7) {
+                    console.error(`Data format error for key ${key}: Missing required fields.`);
+                    continue;
+                }
+
+                const company = item[0];
+                const layoffs = item[5];
+                const date = item[6];
+
+                if (layoffs !== 'Number of employees laid off not available' && !isNaN(layoffs)) {
+                    const layoffDate = new Date(date);
+                    if (isNaN(layoffDate)) {
+                        console.error(`Data format error for key ${key}: Invalid date format.`);
+                        continue;
+                    }
+
+                    const monthDifference = (today.getFullYear() - layoffDate.getFullYear()) * 12 + (today.getMonth() - layoffDate.getMonth());
+                    if (monthDifference < 6) {
+                        const monthYearKey = `${layoffDate.getFullYear()}-${layoffDate.getMonth() + 1}`;
+                        layoffPerMonth[monthYearKey] = (layoffPerMonth[monthYearKey] || 0) + parseInt(layoffs);
+                    }
+                }
+            }
+            return layoffPerMonth;
+        }
+
         fetch('layoff.json')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
                 }
                 return response.json();
             })
             .then(data => {
-                // Sort data by date
-                data.sort((a, b) => new Date(a.date) - new Date(b.date));
+                const layoffPerMonth = parseLayoffData(data);
 
-                // Calculate layoffs per month for the last 6 months
-                const today = new Date();
-                const layoffPerMonth = {};
-                data.forEach(item => {
-                    const layoffDate = new Date(item.date);
-                    const monthDifference = (today.getFullYear() - layoffDate.getFullYear()) * 12 + (today.getMonth() - layoffDate.getMonth());
-                    if (monthDifference < 6) {
-                        const monthYearKey = `${layoffDate.getMonth() + 1}-${layoffDate.getFullYear()}`;
-                        layoffPerMonth[monthYearKey] = (layoffPerMonth[monthYearKey] || 0) + item.layoffs;
+                const labels = Object.keys(layoffPerMonth).sort();
+                const values = labels.map(label => layoffPerMonth[label]);
+
+                const ctx = document.getElementById('layoffChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Number of Layoffs',
+                            data: values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
                     }
-                });
-
-                // Dynamically generate HTML for each month's layoffs and append to 'layoff-data'
-                const layoffDataContainer = document.getElementById('layoff-data');
-                Object.keys(layoffPerMonth).forEach(monthYear => {
-                    const div = document.createElement('div');
-                    div.innerText = `${monthYear}: ${layoffPerMonth[monthYear]} layoffs`;
-                    layoffDataContainer.appendChild(div);
                 });
             })
             .catch(error => {
-                // Handle errors during fetch operation
-                console.error('Fetch error: ', error);
+                console.error('Fetch error:', error);
                 const layoffDataContainer = document.getElementById('layoff-data');
-                layoffDataContainer.innerHTML = '<p>Error loading layoff data.</p>';
+                layoffDataContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
             });
     </script>
 </body>
 </html>
-```
