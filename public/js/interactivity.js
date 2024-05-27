@@ -39,12 +39,48 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     window.location.href = '/jobpost';
   });
+
+  // Assuming this code snippet is part of a larger function that fetches and displays industry links
+  const industryLinksContainer = document.getElementById('industry-links-container');
+  industryLinks.forEach(industry => {
+    const link = document.createElement('a');
+    link.href = '#';
+    link.textContent = industry.name;
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      fetchAndDisplayLayoffData(industry.name);
+    });
+    industryLinksContainer.appendChild(link);
+  });
 });
 
-const express = require('express');
-const router = express.Router();
-const Job = require('../models/Job');
-const { requireAuth } = require('./middleware/authMiddleware');
+async function fetchAndDisplayLayoffData(industryName) {
+  try {
+    const response = await fetch('layoff.json'); // Adjust the path as necessary
+    const data = await response.json();
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+    const filteredData = data.filter(item => {
+      const itemDate = new Date(item.date);
+      return item.industry === industryName && itemDate >= sixMonthsAgo;
+    });
+
+    const container = document.getElementById('layoff-data-industry');
+    container.innerHTML = ''; // Clear existing content
+
+    // Example of dynamically generating HTML content
+    filteredData.forEach(item => {
+      const element = document.createElement('div');
+      element.innerHTML = `<h4>${item.companyName}</h4><p>Layoffs: ${item.layoffs}</p><p>Date: ${item.date}</p>`;
+      container.appendChild(element);
+    });
+
+    // If using Chart.js for a chart representation, initialize and populate the chart here
+  } catch (error) {
+    console.error('Error fetching and displaying layoff data:', error);
+  }
+}
 
 function applyJob(body) {
   fetch('/jobpost', {
@@ -147,3 +183,4 @@ function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
 }
+```
