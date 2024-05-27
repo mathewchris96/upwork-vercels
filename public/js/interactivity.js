@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
       domain,
       location,
       natureOfWork
-    } = Object.fromEntries(formData.entries()); 
+    } = Object.fromellenames(formData.entries()); 
     const body = JSON.stringify({ companyName, role, domain, location, skillsRequired, natureOfWork });
     applyJob(body);
   });
@@ -39,6 +39,43 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     window.location.href = '/jobpost';
   });
+
+  document.getElementById('loadLayoffData').addEventListener('click', function(e) {
+    e.preventDefault();
+    fetchLayoffData();
+  });
+
+  function fetchLayoffData() {
+    fetch('/layoff.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        updateLayoffDisplay(data);
+      })
+      .catch(error => {
+        console.error('Error fetching layoff data:', error);
+      });
+  }
+
+  function updateLayoffDisplay(data) {
+    const layoffTableBody = document.querySelector('#layoffTable tbody');
+    layoffTableBody.innerHTML = ''; // Clear existing table rows
+
+    data.forEach(layoff => {
+      const row = document.createElement('tr');
+      const cellCompanyName = document.createElement('td');
+      cellCompanyName.textContent = layoff.companyName;
+      const cellNumberOfLayoffs = document.createElement('td');
+      cellNumberOfLayoffs.textContent = `${layoff.numberOfLayoffs} layoffs`;
+      row.appendChild(cellCompanyName);
+      row.appendChild(cellNumberOfLayoffs);
+      layoffTableBody.appendChild(row);
+    });
+  }
 });
 
 const express = require('express');
@@ -147,3 +184,4 @@ function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
 }
+```
