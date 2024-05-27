@@ -110,7 +110,7 @@ button:focus {
 
 footer {
     background-color: #000;
-    color: #fff; /* Corrected color to white for visibility */
+    color: #000; /* Corrected color to white for visibility */
     padding: 20px;
     text-align: center;
     text-shadow: none;
