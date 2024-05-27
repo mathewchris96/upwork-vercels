@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Industry Layoff Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Layoff Tracker by Industry</title>
+    <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -18,57 +18,53 @@
         </nav>
     </header>
     <main>
-        <section>
-            <canvas id="layoffChart" width="400" height="400"></canvas>
-        </section>
-        <script>
-            // Fetch data from "layoff.json"
-            fetch('layoff.json')
-                .then(response => response.json())
-                .then(data => {
-                    const parsedData = parseIndustryData(data);
-                    renderChart(parsedData);
-                })
-                .catch(error => console.error('Error loading the data:', error));
+        <div id="layoff-data-industry"></div>
+        <canvas id="layoffChartIndustry" width="400" height="200"></canvas>
+    </main>
+    <script>
+        function parseLayoffDataByIndustry(data) {
+            const layoffsByIndustry = {};
 
-            // Parse industry data
-            function parseIndustryData(data) {
-                const industryData = {};
-                data.forEach(item => {
-                    if (!industryData[item.industry]) {
-                        industryData[item.industry] = 0;
-                    }
-                    industryData[item.industry] += item.layoffs;
-                });
-                return Object.entries(industryData).map(([label, value]) => ({ label, value }));
+            for (const key in data) {
+                const item = data[key];
+                if (item.length < 7) {
+                    console.error(`Data format error for key ${key}: Missing required fields.`);
+                    continue;
+                }
+
+                const industry = item[2];
+                const layoffs = item[5];
+
+                if (layoffs !== 'Number of employees laid off not available' && !isNaN(layoffs)) {
+                    layoffsByIndustry[industry] = (layoffsByIndustry[industry] || 0) + parseInt(layoffs);
+                }
             }
+            return layoffsByIndustry;
+        }
 
-            // Render chart
-            function renderChart(data) {
-                const ctx = document.getElementById('layoffChart').getContext('2d');
+        fetch('layoff.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const layoffsByIndustry = parseLayoffDataByIndustry(data);
+
+                const labels = Object.keys(layoffsByIndustry);
+                const values = labels.map(label => layoffsByIndustry[label]);
+
+                const ctx = document.getElementById('layoffChartIndustry').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: data.map(item => item.label),
+                        labels: labels,
                         datasets: [{
-                            label: '# of Layoffs',
-                            data: data.map(item => item.value),
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
+                            label: 'Number of Layoffs by Industry',
+                            data: values,
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                            borderColor: 'rgba(153, 102, 255, 1)',
                             borderWidth: 1
                         }]
                     },
@@ -80,8 +76,12 @@
                         }
                     }
                 });
-            }
-        </script>
-    </main>
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                const layoffDataContainer = document.getElementById('layoff-data-industry');
+                layoffDataContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
+            });
+    </script>
 </body>
 </html>
