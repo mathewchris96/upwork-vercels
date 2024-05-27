@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layoff Tracker</title>
     <style>
-        a {
-            text-decoration: none;
-            color: #007bff;
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
             font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 5px;
         }
     </style>
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <a href="layoff-tracker-industry.html" style="text-decoration:none; color: #007bff; font-weight: bold;">Layoffs by tech sector</a>
+    <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
     <div id="layoff-data"></div>
     <canvas id="layoffChart" width="400" height="200"></canvas>
 
