@@ -42,6 +42,7 @@
     </header>
     <main>
         <div id="industry-links"></div>
+        <div id="layoffSummary2024" style="text-align: center; margin-bottom: 20px;"></div>
         <canvas id="layoffChartIndustry" width="800" height="400" style="display:none;"></canvas>
     </main>
     <script>
@@ -118,6 +119,13 @@
             });
         }
 
+        function updateLayoffSummary2024(data) {
+            const layoffs2024 = data.filter(entry => new Date(entry[6]).getFullYear() === 2024);
+            const totalLayoffs = layoffs2024.reduce((acc, curr) => acc + parseInt(curr[5]), 0);
+            const totalImpacted = layoffs2024.reduce((acc, curr) => acc + (isNaN(parseInt(curr[3])) ? 0 : parseInt(curr[3])), 0);
+            document.getElementById('layoffSummary2024').innerHTML = `In 2024, there have been ${totalLayoffs} layoffs affecting ${totalImpacted} individuals.`;
+        }
+
         fetch('layoff.json')
             .then(response => {
                 if (!response.ok) {
@@ -127,6 +135,7 @@
             })
             .then(data => {
                 const layoffsByIndustry = parseLayoffDataByIndustry(data);
+                updateLayoffSummary2024(data);
 
                 const industryLinksContainer = document.getElementById('industry-links');
                 Object.keys(layoffsByIndustry).forEach(industry => {
@@ -148,3 +157,4 @@
     <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
+```
