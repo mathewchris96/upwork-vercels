@@ -41,6 +41,7 @@
         </nav>
     </header>
     <main>
+        <div id="layoffSummary2024"></div>
         <div id="industry-links"></div>
         <canvas id="layoffChartIndustry" width="800" height="400" style="display:none;"></canvas>
     </main>
@@ -67,6 +68,29 @@
                 }
             }
             return layoffsByIndustry;
+        }
+
+        function calculateAndDisplaySummary2024(data) {
+            let totalLayoffs2024 = 0;
+            let totalPeopleImpacted2024 = 0;
+            const startDate2024 = new Date('2024-01-01');
+            const today = new Date();
+            const endDate2024 = today.getFullYear() > 2024 ? new Date('2024-12-31') : today;
+            const daysIn2024SoFar = (endDate2024 - startDate2024) / (1000 * 60 * 60 * 24);
+
+            for (const key in data) {
+                const item = data[key];
+                const date = new Date(item[6]);
+                if (date.getFullYear() === 2024) {
+                    const layoffs = isNaN(parseInt(item[5])) ? 0 : parseInt(item[5]);
+                    totalLayoffs2024 += layoffs;
+                    const peopleImpacted = isNaN(parseInt(item[7])) ? 0 : parseInt(item[7]);
+                    totalPeopleImpacted2024 += peopleImpacted;
+                }
+            }
+
+            const averagePeoplePerDay = (totalPeopleImpacted2024 / daysIn2024SoFar).toFixed(2);
+            document.getElementById('layoffSummary2024').innerHTML = `The latest layoffs across all tech companies. So far in 2024, there have been ${totalLayoffs2024} layoffs at tech companies with ${totalPeopleImpacted2024} people impacted (average people per day: ${averagePeoplePerDay}).`;
         }
 
         function getLastSixMonthsLayoffs(layoffData) {
@@ -126,6 +150,7 @@
                 return response.json();
             })
             .then(data => {
+                calculateAndDisplaySummary2024(data);
                 const layoffsByIndustry = parseLayoffDataByIndustry(data);
 
                 const industryLinksContainer = document.getElementById('industry-links');
@@ -148,3 +173,4 @@
     <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
+```
