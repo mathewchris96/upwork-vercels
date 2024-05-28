@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layoff Tracker</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
         .button {
             display: inline-block;
             padding: 10px 20px;
@@ -16,27 +34,54 @@
             text-decoration: none;
             cursor: pointer;
             border-radius: 5px;
+            margin: 20px auto;
+            display: block;
+            width: 200px;
         }
-        h1 {
-            text-align: center;
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .summary {
+            background-color: #e9f7fe;
+            border-left: 6px solid #007bff;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .summary p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
         }
     </style>
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Total number of Tech Layoffs</h1>
-    <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
-    <div id="layoffSummary2024"></div>
-    <canvas id="layoffChart" width="400" height="200"></canvas>
+    <header>
+        <h1>Total number of Tech Layoffs</h1>
+    </header>
+    <div class="content">
+        <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
+        <div id="layoffSummary2024" class="summary"></div>
+        <div id="layoff-data"></div>
+        <canvas id="layoffChart" width="400" height="200"></canvas>
+    </div>
 
     <script>
         function parseLayoffData(data) {
             const today = new Date();
             const layoffPerMonth = {};
-            let totalLayoffs2024 = 0;
-            let totalPeopleImpacted2024 = 0;
-            let lastEntryDate2024 = new Date('2024-01-01');
 
             for (const key in data) {
                 const item = data[key];
@@ -48,22 +93,9 @@
                 const company = item[0];
                 const layoffs = item[5];
                 const date = item[6];
-                const peopleImpacted = item[4]; // Assuming this is the index for people impacted
-
-                const layoffDate = new Date(date);
-                if (layoffDate.getFullYear() === 2024) {
-                    if (layoffs !== 'Number of employees laid off not available' && !isNaN(layoffs)) {
-                        totalLayoffs2024 += parseInt(layoffs);
-                    }
-                    if (peopleImpacted !== 'Number of people impacted not available' && !isNaN(peopleImpacted)) {
-                        totalPeopleImpacted2024 += parseInt(peopleImpacted);
-                    }
-                    if (layoffDate > lastEntryDate2024) {
-                        lastEntryDate2024 = layoffDate;
-                    }
-                }
 
                 if (layoffs !== 'Number of employees laid off not available' && !isNaN(layoffs)) {
+                    const layoffDate = new Date(date);
                     if (isNaN(layoffDate)) {
                         console.error(`Data format error for key ${key}: Invalid date format.`);
                         continue;
@@ -76,13 +108,27 @@
                     }
                 }
             }
-
-            const daysIn2024UpToLastEntry = Math.ceil((lastEntryDate2024 - new Date('2024-01-01')) / (1000 * 60 * 60 * 24)) + 1; // +1 to include the last day
-            const averagePeoplePerDay2024 = totalPeopleImpacted2024 / daysIn2024UpToLastEntry;
-
-            document.getElementById('layoffSummary2024').innerHTML = `The latest layoffs across all tech companies. So far in 2024, there have been ${totalLayoffs2024} layoffs at tech companies with ${totalPeopleImpacted2024} people impacted (${averagePeoplePerDay2024.toFixed(2)} people per day).`;
-
             return layoffPerMonth;
+        }
+
+        function calculateAndDisplaySummary2024(data) {
+            let totalLayoffs2024 = 0;
+            const startDate2024 = new Date('2024-01-01');
+            const today = new Date();
+            const endDate2024 = today.getFullYear() > 2024 ? new Date('2024-12-31') : today;
+            const daysIn2024SoFar = (endDate2024 - startDate2024) / (1000 * 60 * 60 * 24);
+
+            for (const key in data) {
+                const item = data[key];
+                const date = new Date(item[6]);
+                if (date.getFullYear() === 2024) {
+                    const layoffs = isNaN(parseInt(item[5])) ? 0 : parseInt(item[5]);
+                    totalLayoffs2024 += layoffs;
+                }
+            }
+
+            const averageLayoffsPerDay = (totalLayoffs2024 / daysIn2024SoFar).toFixed(2);
+            document.getElementById('layoffSummary2024').innerHTML = `<p>The latest layoffs across all tech companies. So far in 2024, there have been <strong>${totalLayoffs2024}</strong> layoffs at tech companies (average layoffs per day: <strong>${averageLayoffsPerDay}</strong>).</p>`;
         }
 
         fetch('layoff.json')
@@ -93,8 +139,9 @@
                 return response.json();
             })
             .then(data => {
-                const layoffPerMonth = parseLayoffData(data);
+                calculateAndDisplaySummary2024(data);
 
+                const layoffPerMonth = parseLayoffData(data);
                 const labels = Object.keys(layoffPerMonth).sort();
                 const values = labels.map(label => layoffPerMonth[label]);
 
@@ -122,7 +169,7 @@
             })
             .catch(error => {
                 console.error('Fetch error:', error);
-                const layoffDataContainer = document.getElementById('layoffSummary2024');
+                const layoffDataContainer = document.getElementById('layoff-data');
                 layoffDataContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
             });
     </script>
