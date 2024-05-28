@@ -27,13 +27,16 @@
 <body>
     <h1>Total number of Tech Layoffs</h1>
     <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
-    <div id="layoff-data"></div>
+    <div id="layoffSummary2024"></div>
     <canvas id="layoffChart" width="400" height="200"></canvas>
 
     <script>
         function parseLayoffData(data) {
             const today = new Date();
             const layoffPerMonth = {};
+            let totalLayoffs2024 = 0;
+            let totalPeopleImpacted2024 = 0;
+            let lastEntryDate2024 = new Date('2024-01-01');
 
             for (const key in data) {
                 const item = data[key];
@@ -45,9 +48,22 @@
                 const company = item[0];
                 const layoffs = item[5];
                 const date = item[6];
+                const peopleImpacted = item[4]; // Assuming this is the index for people impacted
+
+                const layoffDate = new Date(date);
+                if (layoffDate.getFullYear() === 2024) {
+                    if (layoffs !== 'Number of employees laid off not available' && !isNaN(layoffs)) {
+                        totalLayoffs2024 += parseInt(layoffs);
+                    }
+                    if (peopleImpacted !== 'Number of people impacted not available' && !isNaN(peopleImpacted)) {
+                        totalPeopleImpacted2024 += parseInt(peopleImpacted);
+                    }
+                    if (layoffDate > lastEntryDate2024) {
+                        lastEntryDate2024 = layoffDate;
+                    }
+                }
 
                 if (layoffs !== 'Number of employees laid off not available' && !isNaN(layoffs)) {
-                    const layoffDate = new Date(date);
                     if (isNaN(layoffDate)) {
                         console.error(`Data format error for key ${key}: Invalid date format.`);
                         continue;
@@ -60,6 +76,12 @@
                     }
                 }
             }
+
+            const daysIn2024UpToLastEntry = Math.ceil((lastEntryDate2024 - new Date('2024-01-01')) / (1000 * 60 * 60 * 24)) + 1; // +1 to include the last day
+            const averagePeoplePerDay2024 = totalPeopleImpacted2024 / daysIn2024UpToLastEntry;
+
+            document.getElementById('layoffSummary2024').innerHTML = `The latest layoffs across all tech companies. So far in 2024, there have been ${totalLayoffs2024} layoffs at tech companies with ${totalPeopleImpacted2024} people impacted (${averagePeoplePerDay2024.toFixed(2)} people per day).`;
+
             return layoffPerMonth;
         }
 
@@ -100,9 +122,10 @@
             })
             .catch(error => {
                 console.error('Fetch error:', error);
-                const layoffDataContainer = document.getElementById('layoff-data');
+                const layoffDataContainer = document.getElementById('layoffSummary2024');
                 layoffDataContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
             });
     </script>
 </body>
 </html>
+```
