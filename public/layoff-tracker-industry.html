@@ -43,7 +43,7 @@
     <main>
         <div id="layoffSummary2024"></div>
         <div id="industry-links"></div>
-        <canvas id="layoffChartIndustry" width="800" height="400" style="display:none;"></canvas>
+        <canvas id="layoffChartIndustry" width="800" height="400" style="display: block;"></canvas>
     </main>
     <script>
         function parseLayoffDataByIndustry(data) {
@@ -51,7 +51,7 @@
 
             for (const key in data) {
                 const item = data[key];
-                if (item.length < 7) {
+                if (item.length < 8) { // Modification: Changed from 7 to 8
                     console.error(`Data format error for key ${key}: Missing required fields.`);
                     continue;
                 }
@@ -116,7 +116,6 @@
             const values = labels.map(label => layoffsPerMonth[label]);
 
             const ctx = document.getElementById('layoffChartIndustry').getContext('2d');
-            document.getElementById('layoffChartIndustry').style.display = 'block';
             if (window.industryChart) {
                 window.industryChart.destroy();
             }
@@ -173,4 +172,3 @@
     <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
-```
