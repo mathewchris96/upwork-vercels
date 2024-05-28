@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layoff Tracker</title>
+    <title>Layoff Tracker by Industry</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,30 +26,35 @@
             font-size: 2.5em;
         }
 
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 20px auto;
-            display: block;
-            width: 200px;
+        #industry-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
         }
 
-        .button:hover {
+        #industry-links a {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #industry-links a:hover {
             background-color: #0056b3;
         }
 
-        .content {
-            max-width: 1000px; /* Increased size */
+        #layoffChartIndustry {
+            max-width: 800px;
             margin: 20px auto;
-            padding: 40px; /* Increased padding */
+        }
+
+        .content {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 40px;
             background: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -76,18 +80,20 @@
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
     <header>
-        <h1>Total number of Tech Layoffs</h1>
+        <h1>Industry Layoff Tracker</h1>
+        <nav>
+            <ul>
+                <li><a href="layoff-tracker.html">Home</a></li>
+                <li><a href="layoff-tracker-industry.html">Industry View</a></li>
+            </ul>
+        </nav>
     </header>
-    <div class="content">
-        <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
-        <div id="layoffSummary2024" class="summary"></div>
-        <div id="layoff-data"></div>
-        <canvas id="layoffChart" width="400" height="200"></canvas>
-    </div>
-
+    <main>
+        <div id="industry-links"></div>
+        <canvas id="layoffChartIndustry" width="800" height="400" style="display:none;"></canvas>
+    </main>
     <script>
         function parseLayoffData(data) {
             const today = new Date();
@@ -155,7 +161,7 @@
                 const labels = Object.keys(layoffPerMonth).sort();
                 const values = labels.map(label => layoffPerMonth[label]);
 
-                const ctx = document.getElementById('layoffChart').getContext('2d');
+                const ctx = document.getElementById('layoffChartIndustry').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -185,5 +191,4 @@
     </script>
     <script src="industryLayoffDetails.js"></script>
 </body>
-
 </html>
