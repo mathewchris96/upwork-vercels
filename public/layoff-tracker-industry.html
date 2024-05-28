@@ -91,6 +91,8 @@
             const labels = Object.keys(layoffsPerMonth);
             const values = labels.map(label => layoffsPerMonth[label]);
 
+            const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360", "#AC64AD", "#616774", "#3A4850"];
+
             const ctx = document.getElementById('layoffChartIndustry').getContext('2d');
             document.getElementById('layoffChartIndustry').style.display = 'block';
             if (window.industryChart) {
@@ -103,7 +105,7 @@
                     datasets: [{
                         label: `Number of Layoffs for ${industry} (Last 6 Months)`,
                         data: values,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        backgroundColor: labels.map((_, index) => colors[index % colors.length]),
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     }]
@@ -148,3 +150,4 @@
     <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
+```
