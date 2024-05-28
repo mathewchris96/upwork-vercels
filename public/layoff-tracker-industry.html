@@ -113,7 +113,17 @@
                         y: {
                             beginAtZero: true
                         }
-                    }
+                    },
+                    plugins: [{
+                        afterDraw: chart => {
+                            var ctx = chart.ctx;
+                            chart.data.datasets.forEach((dataset, i) => {
+                                chart.getDatasetMeta(i).data.forEach((bar, index) => {
+                                    ctx.fillText(dataset.data[index], bar.x, bar.y - 5);
+                                });
+                            });
+                        }
+                    }]
                 }
             });
         }
@@ -148,3 +158,4 @@
     <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
+```

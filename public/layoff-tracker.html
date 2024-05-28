@@ -94,6 +94,15 @@
                             y: {
                                 beginAtZero: true
                             }
+                        },
+                        plugins: {
+                            datalabels: {
+                                align: 'end',
+                                anchor: 'end',
+                                formatter: (value, context) => {
+                                    return context.chart.data.labels[context.dataIndex];
+                                }
+                            }
                         }
                     }
                 });
@@ -106,3 +115,4 @@
     </script>
 </body>
 </html>
+```
