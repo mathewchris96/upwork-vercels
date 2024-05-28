@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,16 +14,19 @@
             background-color: #f4f4f4;
             color: #333;
         }
+
         header {
             background: #007bff;
             color: #fff;
             padding: 10px 0;
             text-align: center;
         }
+
         header h1 {
             margin: 0;
             font-size: 2.5em;
         }
+
         .button {
             display: inline-block;
             padding: 10px 20px;
@@ -38,27 +42,32 @@
             display: block;
             width: 200px;
         }
+
         .button:hover {
             background-color: #0056b3;
         }
+
         .content {
-            max-width: 900px; /* Increased size */
+            max-width: 1000px; /* Increased size */
             margin: 20px auto;
-            padding: 30px; /* Increased padding */
+            padding: 40px; /* Increased padding */
             background: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .summary {
             background-color: #e9f7fe;
             border-left: 6px solid #007bff;
             padding: 20px;
             margin-bottom: 20px;
         }
+
         .summary p {
             margin: 0;
             font-size: 1.2em;
         }
+
         canvas {
             display: block;
             margin: 0 auto;
@@ -67,6 +76,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <header>
         <h1>Total number of Tech Layoffs</h1>
@@ -108,7 +118,7 @@
                     }
                 }
             }
-            return layoffPerMonth; 
+            return layoffPerMonth;
         }
 
         function calculateAndDisplaySummary2024(data) {
@@ -175,4 +185,5 @@
     </script>
     <script src="industryLayoffDetails.js"></script>
 </body>
+
 </html>
