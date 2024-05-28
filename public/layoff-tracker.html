@@ -20,6 +20,11 @@
         h1 {
             text-align: center;
         }
+        #layoffSummary {
+            font-size: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -29,6 +34,7 @@
     <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
     <div id="layoff-data"></div>
     <canvas id="layoffChart" width="400" height="200"></canvas>
+    <p id="layoffSummary"></p>
 
     <script>
         function parseLayoffData(data) {
@@ -97,12 +103,34 @@
                         }
                     }
                 });
+                updateLayoffSummary(layoffPerMonth);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
                 const layoffDataContainer = document.getElementById('layoff-data');
                 layoffDataContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
             });
+
+        function updateLayoffSummary(layoffData) {
+            const totalLayoffs = Object.values(layoffData).reduce((acc, current) => acc + current, 0);
+            const months = Object.keys(layoffData).sort();
+            let trend = '';
+            if (months.length > 1) {
+                const firstMonthLayoffs = layoffData[months[0]];
+                const lastMonthLayoffs = layoffData[months[months.length - 1]];
+                if (lastMonthLayoffs > firstMonthLayoffs) {
+                    trend = 'increasing';
+                } else if (lastMonthLayoffs < firstMonthLayoffs) {
+                    trend = 'decreasing';
+                } else {
+                    trend = 'stable';
+                }
+            }
+
+            const layoffSummaryElement = document.getElementById('layoffSummary');
+            layoffSummaryElement.innerHTML = `Total layoffs in the past 6 months: ${totalLayoffs}. Trend: ${trend}.`;
+        }
     </script>
 </body>
 </html>
+```

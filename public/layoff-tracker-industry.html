@@ -43,6 +43,7 @@
     <main>
         <div id="industry-links"></div>
         <canvas id="layoffChartIndustry" width="800" height="400" style="display:none;"></canvas>
+        <div id="layoffSummary"></div>
     </main>
     <script>
         function parseLayoffDataByIndustry(data) {
@@ -116,6 +117,14 @@
                     }
                 }
             });
+
+            updateLayoffSummary(industry, values);
+        }
+
+        function updateLayoffSummary(industry, values) {
+            const totalLayoffs = values.reduce((acc, val) => acc + val, 0);
+            const summaryText = `In the last 6 months, the ${industry} industry has seen a total of ${totalLayoffs} layoffs.`;
+            document.getElementById('layoffSummary').innerText = summaryText;
         }
 
         fetch('layoff.json')
@@ -148,3 +157,4 @@
     <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
+```
