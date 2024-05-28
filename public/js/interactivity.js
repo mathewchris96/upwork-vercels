@@ -39,12 +39,75 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     window.location.href = '/jobpost';
   });
+
+  const employerSignupForm = document.getElementById('employerSignupForm');
+  if (employerSignupForm) {
+    employerSignupForm.addEventListener('submit', function(event) {
+      event.preventDefault(); 
+      const formData = new FormData(event.target);
+      formData.append('username', document.getElementById('username').value);
+      formData.append('companyWebsite', document.getElementById('companyWebsite').value);
+      const employerData = Object.fromEntries(formData.entries());
+
+      fetch('/employer/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: employerData.username,
+          password: employerData.password,
+          email: employerData.email,
+          companyName: employerData.companyName,
+          companyWebsite: employerData.companyWebsite,
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert(data.message); 
+        window.location.href = '/employer/profile-setup';
+      })
+      .catch(error => {
+        console.error('Error during employer signup:', error);
+        alert('An error occurred during signup. Please try again.');
+      });
+    });
+  }
 });
 
-const express = require('express');
-const router = express.Router();
-const Job = require('../models/Job');
-const { requireAuth } = require('./middleware/authMiddleware');
+function handleEmployerSignup(event) {
+  event.preventDefault(); 
+
+  const formData = new FormData(event.target);
+  const employerData = Object.fromEntries(formData.entries());
+
+  fetch('/employer/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(employerData)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    alert(data.message); 
+    window.location.href = '/employer/profile-setup';
+  })
+  .catch(error => {
+    console.error('Error during employer signup:', error);
+    alert('An error occurred during signup. Please try again.');
+  });
+}
 
 function applyJob(body) {
   fetch('/jobpost', {
