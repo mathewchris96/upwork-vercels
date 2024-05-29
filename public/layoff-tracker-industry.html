@@ -15,16 +15,15 @@
         }
         #industry-links a {
             padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
-        #industry-links a:nth-child(1) { background-color: #007bff; color: white; }
-        #industry-links a:nth-child(1):hover { background-color: #0056b3; }
-        #industry-links a:nth-child(2) { background-color: #ff0055; color: white; }
-        #industry-links a:nth-child(2):hover { background-color: #cc0044; }
-        #industry-links a:nth-child(3) { background-color: #00ff55; color: black; }
-        #industry-links a:nth-child(3):hover { background-color: #00cc44; }
+        #industry-links a:hover {
+            background-color: #0056b3;
+        }
         #layoffChartIndustry {
             max-width: 800px;
             margin: 20px auto;
@@ -127,7 +126,7 @@
             const peopleImpacted = totalLayoffs * 3; // Calculating total people impacted
             const days = 180; // 6 months * 30 days
             const peoplePerDay = peopleImpacted / days;
-            const summaryText = `So far in 2024, The ${industry} industry has laid off ${totalLayoffs} people with ${peopleImpacted} people impacted (${peoplePerDay.toFixed(2)} people per day).`;
+            const summaryText = `The latest layoffs across all tech companies. So far in 2024, there have been ${totalLayoffs} layoffs at tech companies with ${peopleImpacted} people impacted (${peoplePerDay.toFixed(2)} people per day).`;
             document.getElementById('layoffSummary').innerText = summaryText;
         }
 
