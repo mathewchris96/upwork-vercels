@@ -9,8 +9,8 @@ router.get('/jobpost', (req, res) => {
 
 router.post('/jobpost', requireAuth, async (req, res) => {
   try {
-    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
-    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink });
+    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, jobLocation } = req.body;
+    const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink, jobLocation });
     await job.save();
     res.redirect('/');
   } catch (error) {
@@ -30,3 +30,4 @@ router.get('/jobs', async (req, res) => {
 });
 
 module.exports = router;
+```

@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const jobsAppliedFor = Array.from(
       document.querySelectorAll('input[name="jobsApplied"]:checked')
     ).map((el) => el.value);
+    
+    // Validate the email before updating the profile
+    if (!validateEmail(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
     updateProfile({ name, email, bio, jobsAppliedFor });
   });
 
@@ -29,9 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
       role,
       domain,
       location,
+      jobLocation,
       natureOfWork
     } = Object.fromEntries(formData.entries()); 
-    const body = JSON.stringify({ companyName, role, domain, location, skillsRequired, natureOfWork });
+    const body = JSON.stringify({ companyName, role, domain, location, jobLocation, skillsRequired, natureOfWork });
     applyJob(body);
   });
 
@@ -40,11 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = '/jobpost';
   });
 });
-
-const express = require('express');
-const router = express.Router();
-const Job = require('../models/Job');
-const { requireAuth } = require('./middleware/authMiddleware');
 
 function applyJob(body) {
   fetch('/jobpost', {
