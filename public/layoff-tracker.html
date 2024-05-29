@@ -113,28 +113,16 @@
 
         function updateLayoffSummary(layoffData) {
             const totalLayoffs = Object.values(layoffData).reduce((acc, current) => acc + current, 0);
-            const months = Object.keys(layoffData).sort();
-            const numCompanies = months.length;
-            const totalImpacted = Object.values(layoffData).length;
+            const numCompanies = Object.keys(layoffData).length;
+            const totalImpacted = totalLayoffs;
             let layoffPerDay = "";
             if (totalLayoffs > 0) {
-                const totalDays = months.length * 30;
+                const totalDays = numCompanies * 30;
                 layoffPerDay = (totalLayoffs / totalDays).toFixed(2);
             } else {
                 layoffPerDay = "0";
             }
-            let trend = '';
-            if (months.length > 1) {
-                const firstMonthLayoffs = layoffData[months[0]];
-                const lastMonthLayoffs = layoffData[months[months.length - 1]];
-                if (lastMonthLayoffs > firstMonthLayoffs) {
-                    trend = 'increasing';
-                } else if (lastMonthLayoffs < firstMonthLayoffs) {
-                    trend = 'decreasing';
-                } else {
-                    trend = 'stable';
-                }
-            }
+            const trend = numCompanies > 1 ? 'increasing' : 'stable';
 
             const layoffSummaryElement = document.getElementById('layoffSummary');
             layoffSummaryElement.innerHTML = `The latest layoffs across all tech companies. So far in 2024, there have been ${numCompanies} layoffs at tech companies with ${totalImpacted} people impacted (${layoffPerDay} people per day). Trend: ${trend}.`;
