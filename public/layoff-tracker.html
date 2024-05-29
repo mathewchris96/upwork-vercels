@@ -114,6 +114,15 @@
         function updateLayoffSummary(layoffData) {
             const totalLayoffs = Object.values(layoffData).reduce((acc, current) => acc + current, 0);
             const months = Object.keys(layoffData).sort();
+            const numCompanies = months.length;
+            const totalImpacted = Object.values(layoffData).length;
+            let layoffPerDay = "";
+            if (totalLayoffs > 0) {
+                const totalDays = months.length * 30;
+                layoffPerDay = (totalLayoffs / totalDays).toFixed(2);
+            } else {
+                layoffPerDay = "0";
+            }
             let trend = '';
             if (months.length > 1) {
                 const firstMonthLayoffs = layoffData[months[0]];
@@ -128,9 +137,8 @@
             }
 
             const layoffSummaryElement = document.getElementById('layoffSummary');
-            layoffSummaryElement.innerHTML = `Total layoffs in the past 6 months: ${totalLayoffs}. Trend: ${trend}.`;
+            layoffSummaryElement.innerHTML = `The latest layoffs across all tech companies. So far in 2024, there have been ${numCompanies} layoffs at tech companies with ${totalImpacted} people impacted (${layoffPerDay} people per day). Trend: ${trend}.`;
         }
     </script>
 </body>
 </html>
-```
