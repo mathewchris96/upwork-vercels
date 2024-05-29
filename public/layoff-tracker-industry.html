@@ -15,14 +15,20 @@
         }
         #industry-links a {
             padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
+        #industry-links a:nth-child(2n+1) {
+            background-color: #007bff;
+            color: white;
+        }
+        #industry-links a:nth-child(2n) {
+            background-color: #6C757D;
+            color: white;
+        }
         #industry-links a:hover {
-            background-color: #0056b3;
+            filter: brightness(85%);
         }
         #layoffChartIndustry {
             max-width: 800px;
@@ -104,8 +110,22 @@
                     datasets: [{
                         label: `Number of Layoffs for ${industry} (Last 6 Months)`,
                         data: values,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
                         borderWidth: 1
                     }]
                 },
@@ -141,7 +161,7 @@
                 const layoffsByIndustry = parseLayoffDataByIndustry(data);
 
                 const industryLinksContainer = document.getElementById('industry-links');
-                Object.keys(layoffsByIndustry).forEach(industry => {
+                Object.keys(layoffsByIndustry).forEach((industry, index) => {
                     const link = document.createElement('a');
                     link.href = "#";
                     link.innerText = industry;
