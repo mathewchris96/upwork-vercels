@@ -61,7 +61,7 @@
 
                     const monthDifference = (today.getFullYear() - layoffDate.getFullYear()) * 12 + (today.getMonth() - layoffDate.getMonth());
                     if (monthDifference < 6) {
-                        const monthYearKey = `${layoffDate.getFullYear()}-${layoffDate.getMonth() + 1}`;
+                        const monthYearKey = `${layoffDate.toLocaleString('default', { month: 'long' })} ${layoffDate.getFullYear()}`;
                         layoffPerMonth[monthYearKey] = (layoffPerMonth[monthYearKey] || 0) + parseInt(layoffs);
                     }
                 }
