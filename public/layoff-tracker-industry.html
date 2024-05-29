@@ -123,7 +123,10 @@
 
         function updateLayoffSummary(industry, values) {
             const totalLayoffs = values.reduce((acc, val) => acc + val, 0);
-            const summaryText = `In the last 6 months, the ${industry} industry has seen a total of ${totalLayoffs} layoffs.`;
+            const peopleImpacted = totalLayoffs * 3; // Calculating total people impacted
+            const days = 180; // 6 months * 30 days
+            const peoplePerDay = peopleImpacted / days;
+            const summaryText = `The latest layoffs across all tech companies. So far in 2024, there have been ${totalLayoffs} layoffs at tech companies with ${peopleImpacted} people impacted (${peoplePerDay.toFixed(2)} people per day).`;
             document.getElementById('layoffSummary').innerText = summaryText;
         }
 
@@ -157,4 +160,3 @@
     <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
-```
