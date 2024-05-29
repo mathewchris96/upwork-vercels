@@ -127,7 +127,7 @@
             const peopleImpacted = totalLayoffs * 3; // Calculating total people impacted
             const days = 180; // 6 months * 30 days
             const peoplePerDay = peopleImpacted / days;
-            const summaryText = `The latest layoffs across all tech companies. So far in 2024, there have been ${totalLayoffs} layoffs at tech companies with ${peopleImpacted} people impacted (${peoplePerDay.toFixed(2)} people per day).`;
+            const summaryText = `So far in 2024, The ${industry} industry has laid off ${totalLayoffs} people with ${peopleImpacted} people impacted (${peoplePerDay.toFixed(2)} people per day).`;
             document.getElementById('layoffSummary').innerText = summaryText;
         }
 
