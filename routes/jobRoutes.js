@@ -21,7 +21,7 @@ router.post('/jobpost', requireAuth, async (req, res) => {
 
 router.get('/jobs', async (req, res) => {
   try {
-    const jobs = await Job.find({});
+    const jobs = await Job.find({}).select('+createdAt'); // Explicitly include the createdAt field in the results
     res.render('jobListing.ejs', { jobs });
   } catch (error) {
     console.error(`Failed to fetch jobs: ${error}`);
@@ -30,3 +30,4 @@ router.get('/jobs', async (req, res) => {
 });
 
 module.exports = router;
+```
