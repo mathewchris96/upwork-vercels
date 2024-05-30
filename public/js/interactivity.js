@@ -37,9 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelector('a[href="#HireWithUpWork"]').addEventListener('click', function(e) {
     e.preventDefault();
-    window.location.href = '/employerRegister';
+    window.location.href = '/jobpost';
   });
 });
+
+const express = require('express');
+const router = express.Router();
+const Job = require('../models/Job');
+const { requireAuth } = require('./middleware/authMiddleware');
 
 function applyJob(body) {
   fetch('/jobpost', {
@@ -56,10 +61,10 @@ function applyJob(body) {
       return response.json();
     })
     .then((data) => {
-      alert(data.message);
       if (data.message === 'Applied to job successfully') {
         window.location.reload();
       }
+      alert(data.message);
     })
     .catch((error) => {
       console.error('Error applying for job:', error);
@@ -97,25 +102,47 @@ function updateProfile(profileData) {
     },
     body: JSON.stringify(profileData)
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Error with the profile update request');
-      }
-      return response.json();
-    })
+    .then((response) => response.json())
     .then((data) => {
-      alert(data.message);
       if (data.message === 'Profile updated successfully') {
         window.location.reload();
       }
+      alert(data.message);
     })
     .catch((error) => {
       console.error('Error:', error);
-      alert('Profile update failed.');
+    });
+}
+
+function submitJobPosting(jobData) {
+  if (!jobData.jobTitle || !jobData.jobDescription || !jobData.jobRequirements || !jobData.jobCategory) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  if (typeof jobData.jobRequirements === 'string') {
+    jobData.jobRequirements = jobData.jobRequirements.split(',').map(requirement => requirement.trim());
+  }
+
+  fetch('/jobs/post', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(jobData)
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message === 'Job posted successfully') {
+        window.location.reload();
+      }
+      alert(data.message);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
     });
 }
 
 function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
-}
