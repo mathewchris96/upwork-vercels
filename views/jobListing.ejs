@@ -58,7 +58,7 @@
                     <p>Location: <%= job.location %></p>
                     <p>Skills Required: <%= job.skillsRequired.join(', ') %></p>
                     <p>Nature of Work: <%= job.natureOfWork %></p>
-                    <p>Posted on: <%= new Date(job.createdAt).toLocaleDateString("en-US") %></p>
+                    <p>Posted <%= calculatePostedTime(job.createdAt) %></p>
                     <a href="<%= job.jobPostingLink %>" class="apply-button">Apply</a>
                 </div>
             <% }); %>
@@ -66,5 +66,21 @@
             <p>No job listings available at the moment.</p>
         <% } %>
     </div>
+
+    <script>
+        function calculatePostedTime(createdAt) {
+            const currentDate = new Date();
+            const postedDate = new Date(createdAt);
+            const timeDiff = currentDate.getTime() - postedDate.getTime();
+            const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+            if (daysDiff === 0) {
+                return "posted today";
+            } else if (daysDiff === 1) {
+                return "posted 1 day ago";
+            } else {
+                return "posted on " + postedDate.toLocaleDateString("en-US");
+            }
+        }
+    </script>
 </body>
-</html>
