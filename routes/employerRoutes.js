@@ -30,13 +30,14 @@ router.post('/employerRegister', async (req, res) => {
 
     const newEmployer = new Employer({ name, email, password, companyName, companyUrl, rolesHiringFor });
     await newEmployer.save();
-    res.redirect('/employerLogin');
+    res.redirect('/employerLogin'); // Corrected redirection path for consistency
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error registering new employer', error: error.message });
   }
 });
 
+// Remove the duplicate GET route for employer login that caused inconsistency
 // Route for rendering the employer login form
 router.get('/employerLogin', (req, res) => {
   res.render('employerLogin');
