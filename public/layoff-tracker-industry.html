@@ -75,6 +75,11 @@
             font-size: 18px;
             margin: 20px;
         }
+        #layoffSummaryContainer {
+            text-align: center;
+            margin: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -90,7 +95,9 @@
     <main>
         <div id="industry-links"></div>
         <canvas id="layoffChartIndustry" width="800" height="400" style="display:none;"></canvas>
-        <div id="layoffSummary">So far in 2024, The Industry industry has laid off 0 people.</div>
+        <div id="layoffSummaryContainer">
+            <div id="layoffSummary">So far in 2024, The Industry industry has laid off 0 people.</div>
+        </div>
     </main>
     <script>
         function parseLayoffDataByIndustry(data) {
@@ -189,6 +196,7 @@
             const peoplePerDay = peopleImpacted / days;
             const summaryText = `So far in 2024, The ${industry} industry has laid off ${totalLayoffs} people.`;
             document.getElementById('layoffSummary').innerText = summaryText;
+            document.getElementById('layoffSummaryContainer').style.display = 'block';
         }
 
         fetch('layoff.json')
