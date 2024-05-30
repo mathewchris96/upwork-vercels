@@ -61,10 +61,10 @@ function applyJob(body) {
       return response.json();
     })
     .then((data) => {
-      alert(data.message);
       if (data.message === 'Applied to job successfully') {
         window.location.reload();
       }
+      alert(data.message);
     })
     .catch((error) => {
       console.error('Error applying for job:', error);
@@ -104,10 +104,10 @@ function updateProfile(profileData) {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert(data.message);
       if (data.message === 'Profile updated successfully') {
         window.location.reload();
       }
+      alert(data.message);
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -133,10 +133,10 @@ function submitJobPosting(jobData) {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert(data.message);
       if (data.message === 'Job posted successfully') {
         window.location.reload();
       }
+      alert(data.message);
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -146,4 +146,3 @@ function submitJobPosting(jobData) {
 function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
-}
