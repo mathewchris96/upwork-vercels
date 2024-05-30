@@ -12,7 +12,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const authRoutes = require('./routes/authRoutes');
-const jobRoutes = require('./routes/jobRoutes');
+const router = express.Router();
+const Job = require('./models/Job'); // Assuming a Job model exists
+
+router.get('/jobs', async (req, res) => {
+  try {
+    const jobs = await Job.find();
+    res.render('jobListing', { jobs });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching job listings');
+  }
+});
 
 mongoose.connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
@@ -34,7 +45,7 @@ app.use(session({
 app.set('view engine', 'ejs');
 
 app.use(authRoutes);
-app.use(jobRoutes);
+app.use(router);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -47,3 +58,4 @@ scheduleScrapper();
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+```

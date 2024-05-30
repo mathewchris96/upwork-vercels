@@ -93,10 +93,10 @@ try:
         print("An error occurred while collecting job listings:", e)
 
     try:
-        jobs_data = [{"companyName": job[1], "jobPostings": job[2]} for job in jobs_info]
-        with open('public/hiring_data.json', 'w') as json_file:
+        jobs_data = [{'title': job[0], 'company': job[1], 'location': job[2], 'timePosted': job[3], 'link': job[4]} for job in jobs_info]
+        with open('hiring_data.json', 'w') as json_file:
             json.dump(jobs_data, json_file)
-        print("Data has been successfully written to 'public/hiring_data.json'")
+        print("Data has been successfully written to 'hiring_data.json'")
     except Exception as e:
         print("An error occurred while writing data to the JSON file:", e)
 
