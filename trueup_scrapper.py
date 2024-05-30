@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import json
+from date_utils import format_posted_date  # Added import statement for date_utils
 
 driver = webdriver.Chrome()
 driver.get("https://www.trueup.io/")
@@ -71,15 +72,16 @@ try:
 
                 try:
                     time_posted = job.find_element(By.CSS_SELECTOR, ".overflow-hidden.text-gray-500.mb-2").text
+                    formatted_time_posted = format_posted_date(time_posted)  # Formatting the time_posted using format_posted_date function
                 except NoSuchElementException:
-                    time_posted = "N/A"
+                    formatted_time_posted = "N/A"
 
                 try:
-                    job_link = job.find_element(By.CSS_SELECTOR, "button[class*='text-start']").get_attribute('href')
+                    job_link = job.find_element(By.CSS_SELECTOR, "a[class*='text-start']").get_attribute('href')
                 except NoSuchElementException:
                     job_link = "N/A"
 
-                jobs_info.append([job_title, company_name, location, time_posted, job_link])
+                jobs_info.append([job_title, company_name, location, formatted_time_posted, job_link])  # Updated to include formatted_time_posted
 
             try:
                 show_more_button = WebDriverWait(driver, 5).until(
