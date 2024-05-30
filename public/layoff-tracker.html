@@ -25,6 +25,14 @@
             margin-top: 20px;
             text-align: center;
         }
+        #layoffChartContainer {
+            max-width: 800px; /* Increased width */
+            margin: 0 auto;
+        }
+        #layoffChart {
+            width: 100% !important; /* Ensure the chart takes full width of the container */
+            height: 400px !important; /* Increased height */
+        }
     </style>
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,8 +41,10 @@
     <h1>Total number of Tech Layoffs</h1>
     <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
     <div id="layoff-data"></div>
-    <canvas id="layoffChart" width="300" height="150"></canvas>
-    <p id="layoffSummary"></p>
+    <p id="layoffSummary"></p> <!-- Moved above the chart -->
+    <div id="layoffChartContainer">
+        <canvas id="layoffChart"></canvas>
+    </div>
 
     <script>
         function parseLayoffData(data) {
@@ -144,4 +154,3 @@
     </script>
 </body>
 </html>
-```
