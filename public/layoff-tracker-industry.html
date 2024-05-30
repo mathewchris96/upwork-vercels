@@ -7,11 +7,48 @@
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        nav ul li a.active {
+            background-color: #0056b3;
+            transform: none;
+        }
         #industry-links {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             padding: 20px;
+            justify-content: center;
         }
         #industry-links a {
             padding: 10px 15px;
@@ -19,20 +56,24 @@
             border-radius: 5px;
             background-color: #007bff;
             color: white;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
             font-weight: bold;
-            margin: 5px; 
+            margin: 5px;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            text-decoration: none;
         }
         #industry-links a:hover {
-            filter: brightness(85%);
+            background-color: #0056b3;
+            transform: scale(1.05);
             text-decoration: underline;
         }
         #layoffChartIndustry {
-            max-width: 600px;
-            height: 300px;
+            max-width: 800px;
             margin: 20px auto;
+        }
+        #layoffSummary {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px;
         }
     </style>
 </head>
@@ -42,7 +83,7 @@
         <nav>
             <ul>
                 <li><a href="layoff-tracker.html">Home</a></li>
-                <li><a href="layoff-tracker-industry.html" style="font-weight: bold; text-decoration: underline;">Industry View</a></li>
+                <li><a href="layoff-tracker-industry.html" class="active">Industry View</a></li>
             </ul>
         </nav>
     </header>
@@ -177,7 +218,5 @@
                 industryLinksContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
             });
     </script>
-    <script src="industryLayoffDetails.js"></script>
 </body>
 </html>
-```
