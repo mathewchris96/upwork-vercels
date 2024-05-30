@@ -20,6 +20,12 @@
         h1 {
             text-align: center;
         }
+        .layoff-item {
+            margin-bottom: 10px;
+        }
+        .layoff-date {
+            font-style: italic;
+        }
     </style>
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -31,9 +37,24 @@
     <canvas id="layoffChart" width="400" height="200"></canvas>
 
     <script>
-        function parseLayoffData(data) {
+        function formatDateDifference(date) {
+            const postDate = new Date(date);
             const today = new Date();
-            const layoffPerMonth = {};
+            const differenceInTime = today.getTime() - postDate.getTime();
+            const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+
+            if (differenceInDays === 0) {
+                return "posted today";
+            } else if (differenceInDays === 1) {
+                return "1 day ago";
+            } else {
+                return `${differenceInDays} days ago`;
+            }
+        }
+
+        function parseLayoffData(data) {
+            const layoffDataContainer = document.getElementById('layoff-data');
+            layoffDataContainer.innerHTML = ''; // Clear existing content
 
             for (const key in data) {
                 const item = data[key];
@@ -53,14 +74,15 @@
                         continue;
                     }
 
-                    const monthDifference = (today.getFullYear() - layoffDate.getFullYear()) * 12 + (today.getMonth() - layoffDate.getMonth());
-                    if (monthDifference < 6) {
-                        const monthYearKey = `${layoffDate.getFullYear()}-${layoffDate.getMonth() + 1}`;
-                        layoffPerMonth[monthYearKey] = (layoffPerMonth[monthYearKey] || 0) + parseInt(layoffs);
-                    }
+                    const dateDifferenceString = formatDateDifference(date);
+                    const layoffItemElem = document.createElement('div');
+                    layoffItemElem.innerHTML = `
+                        <div class="layoff-item">
+                            <strong>${company}</strong> - ${layoffs} layoffs <span class="layoff-date">(${dateDifferenceString})</span>
+                        </div>`;
+                    layoffDataContainer.appendChild(layoffItemElem);
                 }
             }
-            return layoffPerMonth;
         }
 
         fetch('layoff.json')
@@ -71,7 +93,9 @@
                 return response.json();
             })
             .then(data => {
-                const layoffPerMonth = parseLayoffData(data);
+                parseLayoffData(data);
+
+                const layoffPerMonth = {}; // Logic to generate layoffs per month will be implemented here based on the visibility in UI
 
                 const labels = Object.keys(layoffPerMonth).sort();
                 const values = labels.map(label => layoffPerMonth[label]);
@@ -106,3 +130,4 @@
     </script>
 </body>
 </html>
+```
