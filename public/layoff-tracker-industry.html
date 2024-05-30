@@ -15,14 +15,19 @@
         }
         #industry-links a {
             padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
             text-decoration: none;
             border-radius: 5px;
+            background-color: #007bff;
+            color: white;
             transition: background-color 0.3s;
+            font-weight: bold;
+            margin: 5px; 
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
         }
         #industry-links a:hover {
-            background-color: #0056b3;
+            filter: brightness(85%);
+            text-decoration: underline;
         }
         #layoffChartIndustry {
             max-width: 800px;
@@ -36,13 +41,14 @@
         <nav>
             <ul>
                 <li><a href="layoff-tracker.html">Home</a></li>
-                <li><a href="layoff-tracker-industry.html">Industry View</a></li>
+                <li><a href="layoff-tracker-industry.html" style="font-weight: bold; text-decoration: underline;">Industry View</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <div id="industry-links"></div>
         <canvas id="layoffChartIndustry" width="800" height="400" style="display:none;"></canvas>
+        <div id="layoffSummary"></div>
     </main>
     <script>
         function parseLayoffDataByIndustry(data) {
@@ -103,8 +109,22 @@
                     datasets: [{
                         label: `Number of Layoffs for ${industry} (Last 6 Months)`,
                         data: values,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
                         borderWidth: 1
                     }]
                 },
@@ -116,6 +136,17 @@
                     }
                 }
             });
+
+            updateLayoffSummary(industry, values);
+        }
+
+        function updateLayoffSummary(industry, values) {
+            const totalLayoffs = values.reduce((acc, val) => acc + val, 0);
+            const peopleImpacted = totalLayoffs * 3; // Calculating total people impacted
+            const days = 180; // 6 months * 30 days
+            const peoplePerDay = peopleImpacted / days;
+            const summaryText = `So far in 2024, The ${industry} industry has laid off ${totalLayoffs} people.`;
+            document.getElementById('layoffSummary').innerText = summaryText;
         }
 
         fetch('layoff.json')
@@ -129,7 +160,7 @@
                 const layoffsByIndustry = parseLayoffDataByIndustry(data);
 
                 const industryLinksContainer = document.getElementById('industry-links');
-                Object.keys(layoffsByIndustry).forEach(industry => {
+                Object.keys(layoffsByIndustry).forEach((industry, index) => {
                     const link = document.createElement('a');
                     link.href = "#";
                     link.innerText = industry;

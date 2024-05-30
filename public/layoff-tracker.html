@@ -20,6 +20,11 @@
         h1 {
             text-align: center;
         }
+        #layoffSummary {
+            font-size: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -29,6 +34,7 @@
     <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
     <div id="layoff-data"></div>
     <canvas id="layoffChart" width="400" height="200"></canvas>
+    <p id="layoffSummary"></p>
 
     <script>
         function parseLayoffData(data) {
@@ -55,7 +61,7 @@
 
                     const monthDifference = (today.getFullYear() - layoffDate.getFullYear()) * 12 + (today.getMonth() - layoffDate.getMonth());
                     if (monthDifference < 6) {
-                        const monthYearKey = `${layoffDate.getFullYear()}-${layoffDate.getMonth() + 1}`;
+                        const monthYearKey = `${layoffDate.toLocaleString('default', { month: 'long' })} ${layoffDate.getFullYear()}`;
                         layoffPerMonth[monthYearKey] = (layoffPerMonth[monthYearKey] || 0) + parseInt(layoffs);
                     }
                 }
@@ -84,8 +90,22 @@
                         datasets: [{
                             label: 'Number of Layoffs',
                             data: values,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
                             borderWidth: 1
                         }]
                     },
@@ -97,12 +117,30 @@
                         }
                     }
                 });
+                updateLayoffSummary(layoffPerMonth);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
                 const layoffDataContainer = document.getElementById('layoff-data');
                 layoffDataContainer.innerHTML = `<p>Error loading layoff data: ${error.message}</p>`;
             });
+
+        function updateLayoffSummary(layoffData) {
+            const totalLayoffs = Object.values(layoffData).reduce((acc, current) => acc + current, 0);
+            const numCompanies = Object.keys(layoffData).length;
+            const totalImpacted = totalLayoffs;
+            let layoffPerDay = "";
+            if (totalLayoffs > 0) {
+                const totalDays = numCompanies * 30;
+                layoffPerDay = (totalLayoffs / totalDays).toFixed(2);
+            } else {
+                layoffPerDay = "0";
+            }
+            const trend = numCompanies > 1 ? 'increasing' : 'stable';
+
+            const layoffSummaryElement = document.getElementById('layoffSummary');
+            layoffSummaryElement.innerHTML = `The latest layoffs across all tech companies. So far in 2024, there have been ${numCompanies} layoffs at tech companies with ${totalImpacted} people impacted (${layoffPerDay} people per day). Trend: ${trend}.`;
+        }
     </script>
 </body>
 </html>
