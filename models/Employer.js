@@ -1,53 +1,80 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const employerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Please add a name'],
-  },
-  workEmail: {
-    type: String,
-    required: [true, 'Please add a work email'],
-    unique: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please add a valid email',
-    ],
-  },
-  password: {
-    type: String,
-    required: [true, 'Please add a password'],
-    minlength: 6,
-    select: false,
-  },
-  companyName: {
-    type: String,
-    required: [true, 'Please add a company name'],
-  },
-  companyURL: {
-    type: String,
-    required: [true, 'Please add a company URL'],
-    match: [
-      /^(https?):\/\/[^\s$.?#].[^\s]*$/,
-      'Please add a valid URL',
-    ],
-  },
-  typesOfRolesHiringFor: [{
-    type: String,
-    required: true,
-  }],
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error('Invalid email');
+            }
+        }
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 3,
+        trim: true,
+        select: false
+    },
+    companyName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    companyUrl: {
+        type: String,
+        required: true,
+        validate(value) {
+            if (!validator.isURL(value)) {
+                throw new Error('Invalid URL');
+            }
+        }
+    },
+    rolesHiringFor: {
+        type: String,
+        required: true,
+        trim: true
+    }
 }, { timestamps: true });
 
-// Middleware for hashing the password
-employerSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) {
+// Hash the plain text password before saving
+employerSchema.pre('save', async function (next) {
+    const employer = this;
+    if (employer.isModified('password')) {
+        employer.password = await bcrypt.hash(employer.password, 8);
+    }
     next();
-  }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
 });
 
-const Employer = mongoose.model('Employer', employerSchema);
+// Generate an auth token for the employer
+employerSchema.methods.generateAuthToken = async function () {
+    const employer = this;
+    const token = jwt.sign({ _id: employer._id.toString() }, 'secretkey');
+    return token;
+};
 
-module.exports = Employer;
+// Find employer by credentials
+employerSchema.statics.findByCredentials = async (email, password) => {
+    const employer = await Employer.findOne({ email });
+    if (!employer) {
+        throw new Error('Unable to login');
+    }
+    const isMatch = await bcrypt.compare(password, employer.password);
+    if (!isMatch) {
+        throw new Error('Unable to login');
+    }
+    return employer;
+};
+
+const Employer = mongoose.model('Employer', employerSchema);
