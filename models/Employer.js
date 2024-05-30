@@ -23,9 +23,8 @@ const employerSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 3,
-        trim: true,
-        select: false
+        minlength: 7,
+        trim: true
     },
     companyName: {
         type: String,
@@ -46,7 +45,7 @@ const employerSchema = new mongoose.Schema({
         required: true,
         trim: true
     }
-}, { timestamps: true });
+});
 
 // Hash the plain text password before saving
 employerSchema.pre('save', async function (next) {
@@ -68,13 +67,17 @@ employerSchema.methods.generateAuthToken = async function () {
 employerSchema.statics.findByCredentials = async (email, password) => {
     const employer = await Employer.findOne({ email });
     if (!employer) {
-        throw new Error('Unable to login');
+        console.log('No employer found with that email');
+        throw new Error('No employer found with that email');
     }
     const isMatch = await bcrypt.compare(password, employer.password);
     if (!isMatch) {
-        throw new Error('Unable to login');
+        console.log('Wrong Password entered');
+        throw new Error('Wrong Password entered');
     }
     return employer;
 };
 
 const Employer = mongoose.model('Employer', employerSchema);
+
+module.exports = Employer;
