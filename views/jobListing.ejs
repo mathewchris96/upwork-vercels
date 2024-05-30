@@ -58,6 +58,7 @@
                     <p>Location: <%= job.location %></p>
                     <p>Skills Required: <%= job.skillsRequired.join(', ') %></p>
                     <p>Nature of Work: <%= job.natureOfWork %></p>
+                    <p>Posted on: <%= new Date(job.createdAt).toLocaleDateString("en-US") %></p>
                     <a href="<%= job.jobPostingLink %>" class="apply-button">Apply</a>
                 </div>
             <% }); %>
@@ -66,3 +67,4 @@
         <% } %>
     </div>
 </body>
+</html>
