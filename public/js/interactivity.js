@@ -37,14 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelector('a[href="#HireWithUpWork"]').addEventListener('click', function(e) {
     e.preventDefault();
-    window.location.href = '/jobpost';
+    window.location.href = '/employerRegister';
   });
 });
-
-const express = require('express');
-const router = express.Router();
-const Job = require('../models/Job');
-const { requireAuth } = require('./middleware/authMiddleware');
 
 function applyJob(body) {
   fetch('/jobpost', {
@@ -102,7 +97,12 @@ function updateProfile(profileData) {
     },
     body: JSON.stringify(profileData)
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error with the profile update request');
+      }
+      return response.json();
+    })
     .then((data) => {
       alert(data.message);
       if (data.message === 'Profile updated successfully') {
@@ -111,35 +111,7 @@ function updateProfile(profileData) {
     })
     .catch((error) => {
       console.error('Error:', error);
-    });
-}
-
-function submitJobPosting(jobData) {
-  if (!jobData.jobTitle || !jobData.jobDescription || !jobData.jobRequirements || !jobData.jobCategory) {
-    alert('Please fill in all required fields.');
-    return;
-  }
-
-  if (typeof jobData.jobRequirements === 'string') {
-    jobData.jobRequirements = jobData.jobRequirements.split(',').map(requirement => requirement.trim());
-  }
-
-  fetch('/jobs/post', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(jobData)
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      alert(data.message);
-      if (data.message === 'Job posted successfully') {
-        window.location.reload();
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+      alert('Profile update failed.');
     });
 }
 

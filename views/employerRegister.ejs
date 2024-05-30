@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Registration</title>
+</head>
+<body>
+    <h2>Employer Registration</h2>
+    <form action="/employer/register" method="post">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="email">Work email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="companyName">Company name:</label>
+            <input type="text" id="companyName" name="companyName" required>
+        </div>
+        <div>
+            <label for="companyUrl">Company URL:</label>
+            <input type="url" id="companyUrl" name="companyUrl" required>
+        </div>
+        <div>
+            <label for="rolesHiringFor">Types of roles hiring for:</label>
+            <input type="text" id="rolesHiringFor" name="rolesHiringFor" required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
