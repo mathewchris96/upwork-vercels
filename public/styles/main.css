@@ -110,7 +110,7 @@ button:focus {
 
 footer {
     background-color: #000;
-    color: #fff;
+    color: #000;
     padding: 20px;
     text-align: center;
     text-shadow: none;
@@ -177,8 +177,8 @@ footer {
 }
 
 .industry-bar-graph-container {
-    max-width: 600px;
-    margin: 20px auto;
+    max-width: 800px;
+    margin: 40px auto;
     padding: 20px;
     background: #fff;
     border-radius: 10px;
@@ -187,7 +187,7 @@ footer {
 
 .industry-bar-graph {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     box-sizing: border-box;
 }
 
@@ -267,4 +267,3 @@ footer {
         padding: 15px;
         margin: 20px auto;
     }
-}
