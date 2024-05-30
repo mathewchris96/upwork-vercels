@@ -37,7 +37,6 @@ router.post('/employerRegister', async (req, res) => {
   }
 });
 
-// Remove the duplicate GET route for employer login that caused inconsistency
 // Route for rendering the employer login form
 router.get('/employerLogin', (req, res) => {
   res.render('employerLogin');
@@ -49,11 +48,9 @@ router.post('/employerLogin', async (req, res) => {
     // Logic for verifying employer credentials
     const employer = await Employer.findByCredentials(req.body.email, req.body.password);
     const token = await employer.generateAuthToken();
-    res.send({ employer, token });
+    res.redirect('/jobpost'); // Redirect to the job posting page after successful login
   } catch (error) {
     console.error(error);
     res.status(400).send("Login failed");
   }
 });
-
-module.exports = router;
