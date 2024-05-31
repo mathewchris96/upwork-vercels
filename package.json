@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A Node.js backend template for a job listing and application management system.",
   "main": "server.js",
-  "engines": {"node": "18.x"},
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "node server.js",
     "test": "jest",
@@ -22,13 +24,16 @@
   "homepage": "https://github.com/yourusername/backend-template#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "connect-mongo": "^5.1.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^5.11.15",
-    "node-cron": "^3.0.0"
+    "node-cron": "^3.0.0",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
     "eslint": "^7.22.0",
