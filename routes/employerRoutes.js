@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Employer = require('../models/Employer.js');
+const { requireAuth } = require('./middleware/authMiddleware');
 
 function validateEmployerInput(name, email, password, companyName, companyUrl, rolesHiringFor) {
   return name && email && password && companyName && companyUrl && rolesHiringFor;
 }
 
-router.get('/employerRegister', (req, res) => {
+router.get('/register', (req, res) => {
   res.render('employerRegister');
 });
 
-router.post('/employerRegister', async (req, res) => {
+router.post('/register', async (req, res) => {
   const { name, email, password, companyName, companyUrl, rolesHiringFor } = req.body;
   
   if (!validateEmployerInput(name, email, password, companyName, companyUrl, rolesHiringFor)) {
@@ -32,11 +33,11 @@ router.post('/employerRegister', async (req, res) => {
   }
 });
 
-router.get('/employerLogin', (req, res) => {
+router.get('/login', (req, res) => {
   res.render('employerLogin');
 });
 
-router.post('/employerLogin', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const employer = await Employer.findByCredentials(req.body.email, req.body.password);
     const token = await employer.generateAuthToken();
@@ -46,3 +47,5 @@ router.post('/employerLogin', async (req, res) => {
     res.status(400).send("Login failed");
   }
 });
+
+module.exports = router;
