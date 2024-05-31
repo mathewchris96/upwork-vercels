@@ -18,9 +18,8 @@ const employerRoutes = require('./routes/employerRoutes');
 mongoose.connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('Could not connect to MongoDB:', err));
+}).then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('Could not connect to MongoDB:', err));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,7 +35,7 @@ app.set('view engine', 'ejs');
 
 app.use(authRoutes);
 app.use(jobRoutes);
-app.use('/employer', employerRoutes);
+app.use(employerRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -49,4 +48,3 @@ scheduleScrapper();
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-```
