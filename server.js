@@ -13,14 +13,13 @@ const PORT = process.env.PORT || 3000;
 
 const authRoutes = require('./routes/authRoutes');
 const jobRoutes = require('./routes/jobRoutes');
-const employerRoutes = require('./routes/employerRoutes'); // Importing the new employerRoutes
+const employerRoutes = require('./routes/employerRoutes');
 
 mongoose.connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('Could not connect to MongoDB:', err));
+}).then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('Could not connect to MongoDB:', err));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,7 +35,7 @@ app.set('view engine', 'ejs');
 
 app.use(authRoutes);
 app.use(jobRoutes);
-app.use(employerRoutes); // Using the new employerRoutes within the server setup
+app.use(employerRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
