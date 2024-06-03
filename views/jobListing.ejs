@@ -34,7 +34,7 @@
             text-decoration: none;
             font-size: 12px;
         }
-        p {
+        p, .posted-date {
             color: #666;
             font-size: 14px;
         }
@@ -58,6 +58,7 @@
                     <p>Location: <%= job.location %></p>
                     <p>Skills Required: <%= job.skillsRequired.join(', ') %></p>
                     <p>Nature of Work: <%= job.natureOfWork %></p>
+                    <p class="posted-date"><%= Math.max(0, Math.floor((new Date() - new Date(job.createdAt)) / (1000 * 60 * 60 * 24))) %> days ago</p>
                     <a href="<%= job.jobPostingLink %>" class="apply-button">Apply</a>
                 </div>
             <% }); %>
