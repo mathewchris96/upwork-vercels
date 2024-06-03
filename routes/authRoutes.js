@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
     const user = new User({ username, password, email, domainOfInterest, linkedinUrl, currentCompany, currentLevel });
     await user.save();
     req.session.userId = user._id;
-    res.redirect('/login'); // Modified line: Redirecting user to login page after successful registration
+    res.redirect('/login'); // Redirecting user to login page after successful registration
   } catch (error) {
     res.status(500).json({ message: 'Error registering user', error: error.message });
   }
@@ -55,15 +55,8 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: 'Incorrect password' });
     }
-    const userInfo = {
-      userId: user._id,
-      username: user.username,
-      email: user.email,
-      domainOfInterest: user.domainOfInterest
-    };
     req.session.userId = user._id;
-    res.json({ message: 'Login successful', user: userInfo });
-    
+    res.redirect('/profile'); // Redirecting user to profile page after successful login
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
@@ -75,8 +68,7 @@ router.get('/logout', requireAuth, (req, res) => {
       return res.status(500).json({ message: 'Error logging out', error: err });
     }
     res.clearCookie('connect.sid');
-    // Modified line: Redirecting user to index page after successful logout
-    res.redirect('/');
+    res.redirect('/'); // Redirecting user to index page after successful logout
   });
 });
 
@@ -100,6 +92,5 @@ router.get('/profile', requireAuth, async (req, res) => {
     res.status(500).render('error', { message: 'Error retrieving user data', error: error.message });
   }
 });
-
 
 module.exports = router;
