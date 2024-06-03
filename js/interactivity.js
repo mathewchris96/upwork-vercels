@@ -1,5 +1,3 @@
-
-
 // Disclaimer: The following interactions are simulated for demonstration purposes. 
 // In a real application, interactions such as form submissions and updates would require server communication logic or API calls.
 
@@ -8,12 +6,29 @@ function handleLogin(event) {
     event.preventDefault(); // Prevent form from submitting normally
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    
+
     console.log(`Logging in with username: ${username} and password: ${password}`);
-    
-    // Simulate successful login
-    alert('Login successful!');
-    window.location.href = 'profile.html'; // Redirect to profile page on successful login
+
+    // Create a form element dynamically to submit the form
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/login';
+
+    const usernameField = document.createElement('input');
+    usernameField.type = 'hidden';
+    usernameField.name = 'username';
+    usernameField.value = username;
+
+    const passwordField = document.createElement('input');
+    passwordField.type = 'hidden';
+    passwordField.name = 'password';
+    passwordField.value = password;
+
+    form.appendChild(usernameField);
+    form.appendChild(passwordField);
+
+    document.body.appendChild(form);
+    form.submit();
 }
 
 // Function to update user profile information
