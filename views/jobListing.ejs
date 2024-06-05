@@ -24,15 +24,18 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        .apply-button {
+        .apply-button, .btn-secondary {
             display: inline-block;
             padding: 5px 10px;
             margin: 5px 0;
             border-radius: 4px;
-            background-color: #007bff; /* Modified color */
+            background-color: #007bff; /* Modified color for apply-button */
             color: white;
             text-decoration: none;
             font-size: 12px;
+        }
+        .btn-secondary {
+            background-color: #6c757d; /* Specific color for btn-secondary */
         }
         p {
             color: #666;
@@ -59,6 +62,7 @@
                     <p>Skills Required: <%= job.skillsRequired.join(', ') %></p>
                     <p>Nature of Work: <%= job.natureOfWork %></p>
                     <a href="<%= job.jobPostingLink %>" class="apply-button">Apply</a>
+                    <button id="amIFitButton" class="btn btn-secondary">Am I fit?</button>
                 </div>
             <% }); %>
         <% } else { %>
@@ -66,3 +70,4 @@
         <% } %>
     </div>
 </body>
+</html>
