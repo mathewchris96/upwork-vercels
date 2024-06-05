@@ -39,7 +39,35 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     window.location.href = '/jobpost';
   });
+
+  document.getElementById('amIFitButton').addEventListener('click', checkCompatibility);
 });
+
+function checkCompatibility() {
+  const profileData = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    bio: document.getElementById('bio').value,
+    jobsAppliedFor: Array.from(document.querySelectorAll('input[name="jobsApplied"]:checked')).map(el => el.value)
+  };
+  const jobDescription = document.getElementById('jobDescription').textContent; 
+
+  fetch('/api/checkCompatibility', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ userProfile: profileData, jobDescription })
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(`Your compatibility score is: ${data.compatibilityScore}`);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while calculating compatibility. Please try again.');
+  });
+}
 
 const express = require('express');
 const router = express.Router();
@@ -146,3 +174,5 @@ function submitJobPosting(jobData) {
 function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
+}
+```
