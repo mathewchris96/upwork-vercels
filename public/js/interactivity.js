@@ -39,12 +39,18 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     window.location.href = '/jobpost';
   });
+
+  document.getElementById('amIFitButton').addEventListener('click', function() {
+    const jobId = this.getAttribute('data-job-id');
+    calculateCompatibility(jobId);
+  });
 });
 
 const express = require('express');
 const router = express.Router();
 const Job = require('../models/Job');
 const { requireAuth } = require('./middleware/authMiddleware');
+const { calculateCosineSimilarity } = require('./cosineSimilarity.js');
 
 function applyJob(body) {
   fetch('/jobpost', {
@@ -114,6 +120,34 @@ function updateProfile(profileData) {
     });
 }
 
+function calculateCompatibility(jobId) {
+  fetch(`/api/job/compatibility`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ jobId })
+  })
+  .then(response => response.json())
+  .then(({ userProfile, jobDescription }) => {
+    // Transforming the userProfile and jobDescription domain and role strings into vectors
+    const domainVector1 = userProfile.domain.split(' ').map(Number);
+    const domainVector2 = jobDescription.domain.split(' ').map(Number);
+    const roleVector1 = userProfile.role.split(' ').map(Number);
+    const roleVector2 = jobDescription.role.split(' ').map(Number);
+    
+    const domainCompatibility = calculateCosineSimilarity(domainVector1, domainVector2);
+    const roleCompatibility = calculateCosineSimilarity(roleVector1, roleVector2);
+    const compatibilityScore = (domainCompatibility + roleCompatibility) / 2;
+    console.log(`Compatibility Score: ${compatibilityScore}`);
+    alert(`Compatibility Score: ${compatibilityScore}`);
+  })
+  .catch(error => {
+    console.error('Error calculating compatibility:', error);
+    alert('An error occurred while calculating compatibility. Please try again.');
+  });
+}
+
 function submitJobPosting(jobData) {
   if (!jobData.jobTitle || !jobData.jobDescription || !jobData.jobRequirements || !jobData.jobCategory) {
     alert('Please fill in all required fields.');
@@ -146,3 +180,5 @@ function submitJobPosting(jobData) {
 function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
+}
+```
