@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Job = require('../models/Job');
-const { requireAuth, alreadyLoggedIn} = require('./middleware/authMiddleware');
+const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
+const { calculateCosineSimilarity } = require('../utils/cosineSimilarity');
 
 router.get('/jobpost', (req, res) => {
   res.render('jobpost.ejs');
@@ -29,4 +30,16 @@ router.get('/jobs', async (req, res) => {
   }
 });
 
+router.post('/api/job/compatibility', async (req, res) => {
+  try {
+    const { userProfile, jobDescription } = req.body;
+    const compatibilityScore = calculateCosineSimilarity(userProfile, jobDescription);
+    res.json({ compatibilityFile score });
+  } catch (error) {
+    console.error(`Failed to calculate compatibility: ${error}`);
+    res.status(500).json({ message: 'Failed to calculate compatibility', error: error.message });
+  }
+});
+
 module.exports = router;
+```
