@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
+const emailVerification = require('./emailVerification');
 
 const validateUserInput = (username, password, email = '') => {
   const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -34,8 +35,10 @@ router.post('/register', async (req, res) => {
     }
     const user = new User({ username, password, email, domainOfInterest, linkedinUrl, currentCompany, currentLevel });
     await user.save();
+    const token = "your-token-here"; // Assuming token generation logic is implemented elsewhere
+    await emailVerification.sendVerificationEmail(user.email, token);
     req.session.userId = user._id;
-    res.redirect('/login'); // Redirecting user to login page after successful registration
+    res.redirect('/login');
   } catch (error) {
     res.status(500).json({ message: 'Error registering user', error: error.message });
   }
@@ -55,8 +58,14 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: 'Incorrect password' });
     }
+    const userInfo = {
+      userId: user._id,
+      username: user.username,
+      email: user.email,
+      domainOfInterest: user.domainOfInterest
+    };
     req.session.userId = user._id;
-    res.redirect('/profile'); // Redirecting user to profile page after successful login
+    res.json({ message: 'Login successful', user: userInfo });
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
@@ -68,7 +77,7 @@ router.get('/logout', requireAuth, (req, res) => {
       return res.status(500).json({ message: 'Error logging out', error: err });
     }
     res.clearCookie('connect.sid');
-    res.redirect('/'); // Redirecting user to index page after successful logout
+    res.redirect('/');
   });
 });
 
@@ -90,6 +99,19 @@ router.get('/profile', requireAuth, async (req, res) => {
     res.render('profile', { user: userInfo });
   } catch (error) {
     res.status(500).render('error', { message: 'Error retrieving user data', error: error.message });
+  }
+});
+
+router.get('/verify-email/:token', async (req, res) => {
+  try {
+    const { token } = req.params;
+    const user = await emailVerification.verifyEmailToken(token);
+    if (!user) {
+      return res.status(400).render('error', { message: 'Invalid or expired token' });
+    }
+    res.render('verificationSuccess', { message: 'Email verified successfully. Please login.' });
+  } catch (error) {
+    res.status(500).render('error', { message: 'Error verifying email', error: error.message });
   }
 });
 
