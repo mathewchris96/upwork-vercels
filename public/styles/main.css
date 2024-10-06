@@ -267,3 +267,23 @@ footer {
         padding: 15px;
         margin: 20px auto;
     }
+}
+
+#layoffChartContainer {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#layoffChart {
+    width: 100% !important;
+    height: 400px !important;
+}
+
+.pie-chart-label {
+    font-size: 14px;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}

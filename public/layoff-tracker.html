@@ -94,7 +94,7 @@
 
                 const ctx = document.getElementById('layoffChart').getContext('2d');
                 new Chart(ctx, {
-                    type: 'bar',
+                    type: 'pie', // Changed from 'bar' to 'pie'
                     data: {
                         labels: labels,
                         datasets: [{
@@ -120,9 +120,17 @@
                         }]
                     },
                     options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        const total = context.chart._metasets[context.datasetIndex].total;
+                                        const percentage = ((value / total) * 100).toFixed(2);
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
+                                }
                             }
                         }
                     }
@@ -154,3 +162,4 @@
     </script>
 </body>
 </html>
+```
