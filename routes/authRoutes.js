@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
+const { sendVerificationEmail } = require('../utils/emailService');
 
 const validateUserInput = (username, password, email = '') => {
   const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -34,8 +35,10 @@ router.post('/register', async (req, res) => {
     }
     const user = new User({ username, password, email, domainOfInterest, linkedinUrl, currentCompany, currentLevel });
     await user.save();
-    req.session.userId = user._id;
-    res.redirect('/login'); // Redirecting user to login page after successful registration
+    const token = await sendVerificationEmail(user.email, user._id);
+    user.verificationToken = token;
+    await user.save();
+    res.redirect('/verifyEmail'); // Redirecting user to verification page after successful registration
   } catch (error) {
     res.status(500).json({ message: 'Error registering user', error: error.message });
   }
@@ -90,6 +93,21 @@ router.get('/profile', requireAuth, async (req, res) => {
     res.render('profile', { user: userInfo });
   } catch (error) {
     res.status(500).render('error', { message: 'Error retrieving user data', error: error.message });
+  }
+});
+
+router.get('/verifyEmail/:token', async (req, res) => {
+  const { token } = req.params;
+  try {
+    const user = await User.findOne({ verificationToken: token });
+    if (!user) {
+      return res.status(400).render('error', { message: 'Invalid or expired token' });
+    }
+    user.verificationToken = undefined; // Clear the token
+    await user.save();
+    res.redirect('/login'); // Redirect to login page after successful verification
+  } catch (error) {
+    res.status(500).render('error', { message: 'Error verifying email', error: error.message });
   }
 });
 
