@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Incorrect password' });
     }
     req.session.userId = user._id;
-    res.redirect('/profile'); // Redirecting user to profile page after successful login
+    res.redirect('/jobs'); // Redirecting user to jobs page after successful login
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
