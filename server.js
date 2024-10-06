@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const { scheduleTrueupScrapper } = require('./trueupScheduler');
 const { scheduleScrapper } = require('./scrapperScheduler');
+const { sendVerificationEmail } = require('./utils/emailService'); // Importing the email service
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -48,3 +49,4 @@ scheduleScrapper();
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+```
