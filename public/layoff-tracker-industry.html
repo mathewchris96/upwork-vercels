@@ -152,7 +152,7 @@
                 window.industryChart.destroy();
             }
             window.industryChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'pie',
                 data: {
                     labels: labels,
                     datasets: [{
@@ -178,9 +178,20 @@
                     }]
                 },
                 options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed;
+                                    }
+                                    return label;
+                                }
+                            }
                         }
                     }
                 }
@@ -191,8 +202,8 @@
 
         function updateLayoffSummary(industry, values) {
             const totalLayoffs = values.reduce((acc, val) => acc + val, 0);
-            const peopleImpacted = totalLayoffs * 3; // Calculating total people impacted
-            const days = 180; // 6 months * 30 days
+            const peopleImpacted = totalLayoffs * 3;
+            const days = 180;
             const peoplePerDay = peopleImpacted / days;
             const summaryText = `So far in 2024, The ${industry} industry has laid off ${totalLayoffs} people.`;
             document.getElementById('layoffSummary').innerText = summaryText;
