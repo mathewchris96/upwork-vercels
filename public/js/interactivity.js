@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -39,6 +40,17 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     window.location.href = '/jobpost';
   });
+
+  fetch('layoff.json')
+    .then(response => response.json())
+    .then(data => {
+      const layoffPerMonth = parseLayoffData(data);
+      const pieChartData = Object.entries(layoffPerMonth).map(([label, value]) => ({ label, value }));
+      initializePieChart(pieChartData);
+    })
+    .catch(error => {
+      console.error('Error fetching layoff data:', error);
+    });
 });
 
 const express = require('express');
@@ -146,3 +158,4 @@ function submitJobPosting(jobData) {
 function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
+}
