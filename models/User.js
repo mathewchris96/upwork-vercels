@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
@@ -37,6 +36,13 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Job',
   }],
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  emailVerificationToken: {
+    type: String,
+  },
 });
 
 // Hashing the password before saving it to the database
@@ -59,4 +65,5 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
     throw new Error('Comparing password failed');
   }
 };
+
 module.exports = mongoose.model('User', userSchema);
