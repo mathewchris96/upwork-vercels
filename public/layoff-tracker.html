@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,12 +25,12 @@
             text-align: center;
         }
         #layoffChartContainer {
-            max-width: 800px; /* Increased width */
+            max-width: 800px;
             margin: 0 auto;
         }
         #layoffChart {
-            width: 100% !important; /* Ensure the chart takes full width of the container */
-            height: 400px !important; /* Increased height */
+            width: 100% !important;
+            height: 400px !important;
         }
     </style>
     <link rel="stylesheet" href="styles/main.css">
@@ -41,7 +40,7 @@
     <h1>Total number of Tech Layoffs</h1>
     <button class="button" onclick="location.href='layoff-tracker-industry.html'">Layoffs by tech sector</button>
     <div id="layoff-data"></div>
-    <p id="layoffSummary"></p> <!-- Moved above the chart -->
+    <p id="layoffSummary"></p>
     <div id="layoffChartContainer">
         <canvas id="layoffChart"></canvas>
     </div>
@@ -94,7 +93,7 @@
 
                 const ctx = document.getElementById('layoffChart').getContext('2d');
                 new Chart(ctx, {
-                    type: 'bar',
+                    type: 'pie',
                     data: {
                         labels: labels,
                         datasets: [{
@@ -120,9 +119,19 @@
                         }]
                     },
                     options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        return `${label}: ${value}`;
+                                    }
+                                }
                             }
                         }
                     }
