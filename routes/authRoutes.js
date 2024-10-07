@@ -1,6 +1,8 @@
-const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const VerificationToken = require('../models/VerificationToken');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 const { requireAuth, alreadyLoggedIn } = require('./middleware/authMiddleware');
 
 const validateUserInput = (username, password, email = '') => {
@@ -9,6 +11,15 @@ const validateUserInput = (username, password, email = '') => {
   if (email && !isValidEmail(email)) return false;
   return true;
 };
+
+// Configure nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 router.get('/', (req, res) => {
   res.render('index');
@@ -34,6 +45,26 @@ router.post('/register', async (req, res) => {
     }
     const user = new User({ username, password, email, domainOfInterest, linkedinUrl, currentCompany, currentLevel });
     await user.save();
+
+    // Generate verification token
+    const token = crypto.randomBytes(32).toString('hex');
+    const verificationToken = new VerificationToken({
+      userId: user._id,
+      token,
+      expiresAt: Date.now() + 3600000, // 1 hour
+    });
+    await verificationToken.save();
+
+    // Send verification email
+    const verificationUrl = `http://${req.headers.host}/verify-email/${token}`;
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: 'Email Verification',
+      text: `Please verify your email by clicking the following link: ${verificationUrl}`,
+    };
+    await transporter.sendMail(mailOptions);
+
     req.session.userId = user._id;
     res.redirect('/login'); // Redirecting user to login page after successful registration
   } catch (error) {
