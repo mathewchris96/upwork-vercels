@@ -9,7 +9,11 @@ router.get('/jobpost', (req, res) => {
 
 router.post('/jobpost', requireAuth, async (req, res) => {
   try {
-    const { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
+    let { companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink } = req.body;
+    // Ensure skillsRequired is always an array
+    if (!Array.isArray(skillsRequired)) {
+      skillsRequired = skillsRequired.split(',').map(skill => skill.trim());
+    }
     const job = new Job({ companyName, role, domain, location, skillsRequired, natureOfWork, jobPostingLink });
     await job.save();
     res.redirect('/');
@@ -21,7 +25,7 @@ router.post('/jobpost', requireAuth, async (req, res) => {
 
 router.get('/jobs', async (req, res) => {
   try {
-    const jobs = await Job.find({});
+    const jobs = await Job.find({}).select('+createdAt'); // Adjusted to include createdAt in the result set
     res.render('jobListing.ejs', { jobs });
   } catch (error) {
     console.error(`Failed to fetch jobs: ${error}`);
@@ -30,3 +34,4 @@ router.get('/jobs', async (req, res) => {
 });
 
 module.exports = router;
+```
