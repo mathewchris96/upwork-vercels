@@ -101,4 +101,3 @@ try:
         print("An error occurred while writing data to the JSON file:", e)
 
 except Exception as e:
-    print("An error occurred during login or navigation:", e)
